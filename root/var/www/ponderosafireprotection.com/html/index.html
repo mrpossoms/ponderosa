@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ponderosa Fire Protection — Eco-Safe Wildfire Defense for Colorado Homes</title>
+<meta name="description" content="Colorado's eco-safe wildfire defense system. Plant-based retardants, ember-blocking mesh, native fire-wise landscape design, and grid-independent water + pump infrastructure. Free property assessment." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#F18A1F;
+  --orange-deep:#E07410;
+  --ember:#FF4500;
+  --black:#0A0A0A;
+  --char:#181412;
+  --char-2:#221B17;
+  --cream:#FFF6E8;
+  --paper:#F7EFE1;
+  --line:rgba(255,246,232,0.12);
+  --line-strong:rgba(255,246,232,0.22);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--cream);
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+/* ===== Typography ===== */
+.display{font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:.01em;line-height:.95;font-weight:400}
+.oswald{font-family:'Oswald',sans-serif;letter-spacing:.02em;text-transform:uppercase;font-weight:600}
+.eyebrow{
+  font-family:'Oswald',sans-serif;
+  font-size:13px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--orange);
+  font-weight:600;
+}
+
+/* ===== Layout ===== */
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+section{padding:120px 0;position:relative}
+.divider-flame{
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--orange) 30%,var(--orange) 70%,transparent);
+  opacity:.6;
+}
+
+/* ===== Buttons ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Oswald',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-weight:600;
+  font-size:14px;
+  padding:16px 28px;
+  border-radius:2px;
+  transition:transform .15s ease, background .15s ease, color .15s ease;
+  white-space:nowrap;
+}
+.btn-primary{background:var(--orange);color:#0A0A0A}
+.btn-primary:hover{background:#FFA63D;transform:translateY(-1px)}
+.btn-ghost{border:1px solid var(--line-strong);color:var(--cream)}
+.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.btn .arrow{transition:transform .15s ease}
+.btn:hover .arrow{transform:translateX(3px)}
+
+/* ===== Nav ===== */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,10,10,.82);
+  backdrop-filter:saturate(140%) blur(14px);
+  -webkit-backdrop-filter:saturate(140%) blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;max-width:1280px;margin:0 auto;gap:24px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;flex:0 0 38px}
+.brand-text{display:flex;flex-direction:column;line-height:1}
+.brand-text .name{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:15px}
+.brand-text .sub{font-family:'Oswald',sans-serif;font-weight:500;letter-spacing:.32em;text-transform:uppercase;font-size:9px;color:var(--orange);margin-top:3px}
+.nav-links{display:flex;gap:30px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:13px;font-weight:500}
+.nav-links a{opacity:.78;transition:opacity .15s ease, color .15s ease}
+.nav-links a:hover{opacity:1;color:var(--orange)}
+.nav-cta{display:flex;gap:12px;align-items:center}
+.nav-phone{font-family:'Oswald',sans-serif;letter-spacing:.08em;font-size:13px;opacity:.78}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .nav-phone{display:none}
+}
+
+/* ===== Hero ===== */
+.hero{
+  padding:96px 0 120px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(241,138,31,.16), transparent 60%),
+    radial-gradient(900px 500px at 0% 30%, rgba(255,69,0,.10), transparent 60%),
+    linear-gradient(180deg,#0A0A0A 0%, #120E0B 100%);
+}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:48px}}
+.hero h1{
+  font-family:'Bebas Neue',Impact,sans-serif;
+  font-size:clamp(54px, 8vw, 110px);
+  line-height:.92;
+  letter-spacing:.005em;
+  margin:18px 0 22px;
+}
+.hero h1 .accent{color:var(--orange);display:block}
+.hero p.lede{
+  font-size:19px;
+  line-height:1.55;
+  max-width:560px;
+  color:rgba(255,246,232,.82);
+  margin-bottom:32px;
+}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
+.hero-trust{display:flex;gap:28px;flex-wrap:wrap;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,246,232,.55)}
+.hero-trust span{display:inline-flex;align-items:center;gap:8px}
+.hero-trust .dot{width:6px;height:6px;border-radius:50%;background:var(--orange)}
+
+/* Hero visual */
+.hero-visual{
+  position:relative;
+  aspect-ratio: 4/5;
+  border-radius:4px;
+  overflow:hidden;
+  background:linear-gradient(160deg,#1A120C 0%, #2A1A0E 100%);
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(0,0,0,.55), inset 0 0 0 1px rgba(241,138,31,.08);
+}
+.hero-visual::before{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(800px 400px at 70% 110%, rgba(255,69,0,.55), transparent 60%),
+    radial-gradient(500px 300px at 30% 90%, rgba(241,138,31,.45), transparent 60%);
+}
+.hero-visual svg.scene{position:absolute;inset:0;width:100%;height:100%}
+.hero-badge{
+  position:absolute;left:24px;bottom:24px;
+  background:rgba(10,10,10,.78);backdrop-filter:blur(8px);
+  border:1px solid var(--line-strong);
+  border-radius:2px;
+  padding:16px 18px;
+  max-width:280px;
+}
+.hero-badge .label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.22em;color:var(--orange);text-transform:uppercase;margin-bottom:6px}
+.hero-badge .quote{font-size:14px;line-height:1.45;color:rgba(255,246,232,.92)}
+
+/* ===== Logo (inline SVG component) ===== */
+.logo-shield{display:block}
+
+/* ===== Section: Problem / Stats ===== */
+.section-dark{background:var(--black)}
+.section-char{background:var(--char)}
+.section-cream{background:var(--paper);color:#1A130D}
+.section-cream .eyebrow{color:var(--orange-deep)}
+.section-cream .display{color:#1A130D}
+
+.section-head{max-width:780px;margin-bottom:64px}
+.section-head h2{
+  font-family:'Bebas Neue',Impact,sans-serif;
+  font-size:clamp(40px,5.5vw,68px);
+  line-height:1;
+  margin-top:14px;
+}
+.section-head h2 .accent{color:var(--orange)}
+.section-head p{
+  margin-top:18px;
+  font-size:18px;
+  line-height:1.6;
+  color:rgba(255,246,232,.78);
+  max-width:680px;
+}
+.section-cream .section-head p{color:#3D2C20}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+@media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+.stat{
+  padding:32px 28px;
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+  background:linear-gradient(180deg,rgba(241,138,31,.04),transparent);
+  position:relative;
+  overflow:hidden;
+}
+.stat::after{
+  content:"";position:absolute;left:0;top:0;width:3px;height:42px;background:var(--orange);
+}
+.stat .num{font-family:'Bebas Neue',Impact,sans-serif;font-size:64px;line-height:1;color:var(--orange)}
+.stat .label{font-family:'Oswald',sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,246,232,.65);margin-top:8px}
+.stat .desc{margin-top:14px;font-size:14px;line-height:1.55;color:rgba(255,246,232,.78)}
+
+/* ===== System: 4 layers ===== */
+.layers{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+@media(max-width:880px){.layers{grid-template-columns:1fr}}
+.layer{
+  padding:36px 32px;
+  border:1px solid var(--line-strong);
+  background:linear-gradient(180deg,#13100D 0%, #0E0B09 100%);
+  border-radius:3px;
+  position:relative;
+  transition:border-color .2s ease, transform .2s ease;
+}
+.layer:hover{border-color:var(--orange);transform:translateY(-2px)}
+.layer .num{
+  font-family:'Bebas Neue',Impact,sans-serif;
+  font-size:18px;
+  letter-spacing:.18em;
+  color:var(--orange);
+  margin-bottom:18px;
+}
+.layer .icon{width:48px;height:48px;margin-bottom:18px;color:var(--orange)}
+.layer h3{
+  font-family:'Bebas Neue',Impact,sans-serif;
+  font-size:34px;
+  letter-spacing:.01em;
+  line-height:1;
+  margin-bottom:14px;
+}
+.layer p{color:rgba(255,246,232,.75);font-size:15.5px;line-height:1.6}
+.layer ul{margin-top:16px;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.layer ul li{font-size:14px;color:rgba(255,246,232,.7);padding-left:18px;position:relative}
+.layer ul li::before{
+  content:"";position:absolute;left:0;top:9px;width:8px;height:2px;background:var(--orange);
+}
+
+/* ===== Tiers ===== */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+@media(max-width:980px){.tiers{grid-template-columns:1fr}}
+.tier{
+  display:flex;flex-direction:column;
+  padding:36px 30px;
+  border-radius:3px;
+  border:1px solid var(--line-strong);
+  background:linear-gradient(180deg,#14100C 0%, #0C0907 100%);
+  position:relative;
+}
+.tier.featured{
+  border-color:var(--orange);
+  box-shadow:0 30px 60px rgba(241,138,31,.08), inset 0 0 0 1px rgba(241,138,31,.4);
+  transform:translateY(-8px);
+}
+@media(max-width:980px){.tier.featured{transform:none}}
+.tier .ribbon{
+  position:absolute;top:-14px;left:24px;
+  background:var(--orange);color:#0A0A0A;
+  font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  padding:6px 12px;border-radius:2px;
+}
+.tier .tier-name{font-family:'Bebas Neue',Impact,sans-serif;font-size:36px;line-height:1;margin-bottom:6px}
+.tier .tier-phase{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+.tier .tier-price{font-family:'Bebas Neue',Impact,sans-serif;font-size:42px;color:var(--cream);line-height:1}
+.tier .tier-price small{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:rgba(255,246,232,.55);margin-left:4px}
+.tier .tier-tagline{margin:14px 0 24px;color:rgba(255,246,232,.75);font-size:14.5px;line-height:1.55;min-height:48px}
+.tier-feats{list-style:none;padding:0;margin:0 0 28px;display:flex;flex-direction:column;gap:10px}
+.tier-feats li{font-size:14px;line-height:1.5;color:rgba(255,246,232,.85);padding-left:22px;position:relative}
+.tier-feats li::before{
+  content:"";position:absolute;left:0;top:7px;width:12px;height:8px;
+  border-left:2px solid var(--orange);border-bottom:2px solid var(--orange);transform:rotate(-45deg);
+}
+.tier .btn{margin-top:auto;justify-content:center}
+
+/* ===== How it works ===== */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative}
+@media(max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}}
+.step{padding:28px;border:1px solid var(--line-strong);border-radius:3px;background:rgba(10,10,10,.4);position:relative}
+.step .step-num{
+  font-family:'Bebas Neue',Impact,sans-serif;font-size:48px;
+  color:var(--orange);line-height:1;margin-bottom:10px;
+}
+.step h4{font-family:'Oswald',sans-serif;font-size:16px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.step p{font-size:14px;color:rgba(255,246,232,.7);line-height:1.55}
+
+/* ===== Partners ===== */
+.partner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){.partner-grid{grid-template-columns:1fr}}
+.partner{
+  padding:32px 28px;
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+  background:linear-gradient(180deg,#13100D 0%, #0E0B09 100%);
+}
+.partner .ptag{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+.partner h4{font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;line-height:1;margin-bottom:14px}
+.partner p{font-size:14.5px;color:rgba(255,246,232,.78);line-height:1.6}
+.partner .pstat{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);display:flex;gap:18px}
+.partner .pstat div{flex:1}
+.partner .pstat .v{font-family:'Bebas Neue',Impact,sans-serif;font-size:34px;color:var(--orange);line-height:1}
+.partner .pstat .k{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,246,232,.6);margin-top:4px}
+
+/* ===== Why eco / differentiator ===== */
+.diff-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+@media(max-width:900px){.diff-grid{grid-template-columns:1fr}}
+.diff-vs{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:1px solid var(--line-strong);border-radius:3px;overflow:hidden;
+}
+.diff-col{padding:28px}
+.diff-col.them{background:#0E0B09}
+.diff-col.us{background:linear-gradient(180deg,#1A130B 0%, #120D08 100%);border-left:1px solid var(--line-strong)}
+.diff-col h5{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:18px}
+.diff-col.them h5{color:rgba(255,246,232,.5)}
+.diff-col.us h5{color:var(--orange)}
+.diff-col ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:12px}
+.diff-col ul li{font-size:14px;line-height:1.5;padding-left:22px;position:relative;color:rgba(255,246,232,.85)}
+.diff-col.them ul li::before{content:"×";position:absolute;left:0;top:-2px;color:rgba(255,246,232,.4);font-size:18px;font-weight:700}
+.diff-col.us ul li::before{content:"";position:absolute;left:0;top:8px;width:12px;height:8px;border-left:2px solid var(--orange);border-bottom:2px solid var(--orange);transform:rotate(-45deg)}
+
+/* ===== Service area ===== */
+.area{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+@media(max-width:900px){.area{grid-template-columns:1fr}}
+.area-map{
+  aspect-ratio:5/4;
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+  background:linear-gradient(180deg,#13100D 0%, #0A0807 100%);
+  position:relative;overflow:hidden;
+}
+.cities{list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 24px;margin-top:24px}
+.cities li{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,246,232,.8);padding-left:18px;position:relative}
+.cities li::before{content:"";position:absolute;left:0;top:7px;width:8px;height:8px;background:var(--orange);border-radius:50%}
+
+/* ===== Testimonials ===== */
+.tests{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){.tests{grid-template-columns:1fr}}
+.test{
+  padding:30px 28px;
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+  background:rgba(10,10,10,.4);
+}
+.test .stars{color:var(--orange);font-size:16px;letter-spacing:2px;margin-bottom:14px}
+.test .body{font-size:15px;line-height:1.6;color:rgba(255,246,232,.88);font-style:italic}
+.test .who{margin-top:18px;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,246,232,.65)}
+.test .who strong{color:var(--orange);font-weight:600}
+
+/* ===== FAQ ===== */
+.faq{max-width:880px}
+.faq-item{border-top:1px solid var(--line-strong)}
+.faq-item:last-child{border-bottom:1px solid var(--line-strong)}
+.faq-item summary{
+  list-style:none;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:24px 0;
+  font-family:'Oswald',sans-serif;font-size:17px;letter-spacing:.04em;
+  text-transform:uppercase;font-weight:500;
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary .plus{
+  width:28px;height:28px;border:1px solid var(--orange);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--orange);
+  font-size:18px;font-weight:300;flex:0 0 28px;transition:transform .2s ease, background .2s ease, color .2s ease;
+}
+.faq-item[open] summary .plus{background:var(--orange);color:#0A0A0A;transform:rotate(45deg)}
+.faq-item .ans{padding:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,246,232,.78);max-width:760px}
+
+/* ===== CTA / Form ===== */
+.cta-section{
+  background:
+    radial-gradient(900px 500px at 20% 0%, rgba(241,138,31,.22), transparent 60%),
+    radial-gradient(700px 400px at 100% 100%, rgba(255,69,0,.16), transparent 60%),
+    linear-gradient(180deg,#120D08 0%, #0A0A0A 100%);
+}
+.cta-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:start}
+@media(max-width:900px){.cta-grid{grid-template-columns:1fr;gap:40px}}
+.cta-side h2{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(40px,5.5vw,70px);line-height:.95;margin-top:14px}
+.cta-side h2 .accent{color:var(--orange)}
+.cta-side p{margin-top:18px;color:rgba(255,246,232,.8);font-size:17px;max-width:520px;line-height:1.6}
+.cta-bullets{list-style:none;padding:0;margin-top:28px;display:flex;flex-direction:column;gap:14px;max-width:520px}
+.cta-bullets li{padding-left:28px;position:relative;font-size:15px;color:rgba(255,246,232,.85);line-height:1.5}
+.cta-bullets li::before{
+  content:"";position:absolute;left:0;top:6px;width:14px;height:10px;
+  border-left:2px solid var(--orange);border-bottom:2px solid var(--orange);transform:rotate(-45deg);
+}
+.form-card{
+  background:#0C0907;
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+  padding:36px;
+  box-shadow:0 30px 60px rgba(0,0,0,.5);
+}
+.form-card h3{
+  font-family:'Bebas Neue',Impact,sans-serif;
+  font-size:30px;
+  margin-bottom:6px;
+}
+.form-card .sub{font-size:13.5px;color:rgba(255,246,232,.6);margin-bottom:24px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,246,232,.6)}
+.field input, .field select, .field textarea{
+  background:#161210;
+  border:1px solid var(--line-strong);
+  color:var(--cream);
+  padding:13px 14px;
+  font-size:14.5px;font-family:inherit;
+  border-radius:2px;outline:none;
+  transition:border-color .15s ease;
+}
+.field input:focus, .field select:focus, .field textarea:focus{border-color:var(--orange)}
+.field textarea{min-height:80px;resize:vertical}
+.form-card .btn{width:100%;justify-content:center;margin-top:8px;padding:18px 28px;font-size:14px}
+.consent{margin-top:14px;font-size:12px;color:rgba(255,246,232,.5);line-height:1.5}
+
+/* ===== Footer ===== */
+footer{background:#070605;border-top:1px solid var(--line);padding:60px 0 32px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px}
+@media(max-width:880px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+.foot-brand p{margin-top:14px;font-size:14px;color:rgba(255,246,232,.6);line-height:1.6;max-width:340px}
+.foot-col h6{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+.foot-col ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+.foot-col li a{font-size:14px;color:rgba(255,246,232,.7);transition:color .15s ease}
+.foot-col li a:hover{color:var(--orange)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:rgba(255,246,232,.45);font-family:'Oswald',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:600px){.foot-bottom{flex-direction:column;gap:12px;text-align:center}}
+
+/* ===== Ember floaters for hero ===== */
+.embers{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.ember-dot{position:absolute;width:3px;height:3px;background:var(--orange);border-radius:50%;opacity:0;animation:rise 6s linear infinite;box-shadow:0 0 8px rgba(255,140,40,.9), 0 0 18px rgba(255,80,0,.5)}
+@keyframes rise{
+  0%{transform:translateY(0) translateX(0);opacity:0}
+  10%{opacity:1}
+  90%{opacity:.4}
+  100%{transform:translateY(-120vh) translateX(40px);opacity:0}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="Ponderosa Fire Protection home">
+      <!-- Inline logo: shield with ponderosa pine -->
+      <svg class="brand-mark" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 4 C 30 8, 14 12, 8 18 L 8 60 C 8 84, 28 100, 50 106 C 72 100, 92 84, 92 60 L 92 18 C 86 12, 70 8, 50 4 Z"
+              fill="#F18A1F" stroke="#0A0A0A" stroke-width="5" stroke-linejoin="round"/>
+        <!-- Stylized pine -->
+        <g fill="#0A0A0A">
+          <polygon points="50,18 42,30 47,30 38,42 46,42 34,56 44,56 30,72 70,72 56,56 66,56 54,42 62,42 53,30 58,30"/>
+          <rect x="47" y="72" width="6" height="22" rx="1"/>
+        </g>
+      </svg>
+      <div class="brand-text">
+        <span class="name">Ponderosa</span>
+        <span class="sub">Fire Protection</span>
+      </div>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#system">The System</a>
+      <a href="#tiers">Packages</a>
+      <a href="#process">Process</a>
+      <a href="#partners">Partners</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <span class="nav-phone">(720) 555-0117</span>
+      <a class="btn btn-primary" href="#assess">Free Assessment <span class="arrow">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="embers" aria-hidden="true">
+    <span class="ember-dot" style="left:8%;top:80%;animation-delay:0s"></span>
+    <span class="ember-dot" style="left:18%;top:90%;animation-delay:1.4s"></span>
+    <span class="ember-dot" style="left:30%;top:70%;animation-delay:.6s;width:2px;height:2px"></span>
+    <span class="ember-dot" style="left:42%;top:88%;animation-delay:2.2s"></span>
+    <span class="ember-dot" style="left:62%;top:78%;animation-delay:3.1s;width:4px;height:4px"></span>
+    <span class="ember-dot" style="left:74%;top:92%;animation-delay:1.9s"></span>
+    <span class="ember-dot" style="left:88%;top:84%;animation-delay:.3s"></span>
+  </div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Colorado · Eco-Safe Wildfire Defense</span>
+        <h1>
+          Defend your home<br/>
+          <span class="accent">without harming</span><br/>
+          the land you love.
+        </h1>
+        <p class="lede">
+          Ponderosa Fire Protection is Colorado's first full-spectrum, eco-safe wildfire defense system. Plant-based retardants, ember-blocking stainless mesh, fire-wise native landscape design, and grid-independent water + pump infrastructure — engineered as one layered system.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#assess">Book a Free Property Assessment <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#system">See the System</a>
+        </div>
+        <div class="hero-trust">
+          <span><span class="dot"></span>Locally based · Boulder &amp; Front Range</span>
+          <span><span class="dot"></span>Non-toxic · pet- &amp; pollinator-safe</span>
+          <span><span class="dot"></span>Komodo · WDM partner installer</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <!-- Scenic SVG: black mountain ridge + ember-glow sky + ponderosa silhouettes + house -->
+        <svg class="scene" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1A0E08"/>
+              <stop offset="50%" stop-color="#3B1E0B"/>
+              <stop offset="100%" stop-color="#7A2E0A"/>
+            </linearGradient>
+            <radialGradient id="sun" cx=".7" cy=".75" r=".4">
+              <stop offset="0%" stop-color="#FFB347" stop-opacity=".95"/>
+              <stop offset="60%" stop-color="#FF6A1A" stop-opacity=".4"/>
+              <stop offset="100%" stop-color="#FF6A1A" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="400" height="500" fill="url(#sky)"/>
+          <circle cx="280" cy="375" r="180" fill="url(#sun)"/>
+          <!-- Distant ridge -->
+          <path d="M0 340 L 50 310 L 110 325 L 180 285 L 250 305 L 320 270 L 400 295 L 400 500 L 0 500 Z" fill="#1A0F08" opacity=".9"/>
+          <!-- Middle ridge -->
+          <path d="M0 380 L 70 350 L 140 370 L 210 335 L 290 360 L 360 340 L 400 355 L 400 500 L 0 500 Z" fill="#120A06"/>
+          <!-- Foreground trees (ponderosa silhouettes) -->
+          <g fill="#0A0706">
+            <g transform="translate(40 320)">
+              <polygon points="0,90 -16,90 -10,75 -18,75 -8,55 -16,55 -6,35 -12,35 -3,15 0,-5 3,15 12,35 6,35 16,55 8,55 18,75 10,75 16,90"/>
+              <rect x="-3" y="90" width="6" height="30"/>
+            </g>
+            <g transform="translate(95 360) scale(.7)">
+              <polygon points="0,90 -16,90 -10,75 -18,75 -8,55 -16,55 -6,35 -12,35 -3,15 0,-5 3,15 12,35 6,35 16,55 8,55 18,75 10,75 16,90"/>
+              <rect x="-3" y="90" width="6" height="30"/>
+            </g>
+            <g transform="translate(340 340) scale(1.2)">
+              <polygon points="0,90 -16,90 -10,75 -18,75 -8,55 -16,55 -6,35 -12,35 -3,15 0,-5 3,15 12,35 6,35 16,55 8,55 18,75 10,75 16,90"/>
+              <rect x="-3" y="90" width="6" height="30"/>
+            </g>
+            <g transform="translate(370 380) scale(.6)">
+              <polygon points="0,90 -16,90 -10,75 -18,75 -8,55 -16,55 -6,35 -12,35 -3,15 0,-5 3,15 12,35 6,35 16,55 8,55 18,75 10,75 16,90"/>
+              <rect x="-3" y="90" width="6" height="30"/>
+            </g>
+          </g>
+          <!-- House silhouette with subtle protection glow -->
+          <g transform="translate(170 380)">
+            <circle cx="35" cy="35" r="85" fill="#F18A1F" opacity=".10"/>
+            <circle cx="35" cy="35" r="62" fill="#F18A1F" opacity=".10"/>
+            <polygon points="0,40 35,8 70,40 70,90 0,90" fill="#080604"/>
+            <rect x="28" y="60" width="14" height="30" fill="#1A0E08"/>
+            <rect x="10" y="50" width="10" height="10" fill="#1A0E08"/>
+            <rect x="50" y="50" width="10" height="10" fill="#1A0E08"/>
+          </g>
+          <!-- Sprinkler arc -->
+          <g stroke="#F18A1F" stroke-width="1" fill="none" opacity=".55">
+            <path d="M205 388 Q 230 350 260 395" stroke-dasharray="2 4"/>
+            <path d="M205 388 Q 180 350 150 395" stroke-dasharray="2 4"/>
+          </g>
+        </svg>
+        <div class="hero-badge">
+          <div class="label">Marshall Fire · 2021</div>
+          <div class="quote">Over 1,000 homes destroyed in a single day along Colorado's Front Range. Most ignited from embers — not flames.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM ============ -->
+<section class="section-char" id="problem">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The New Colorado Reality</span>
+      <h2>Most homes don't burn from <span class="accent">flames.</span></h2>
+      <p>They burn from windblown embers that travel a mile or more ahead of the fire front, lodge in vents, gutters, and dry vegetation, and ignite before the fire ever arrives. Traditional landscaping and debris removal can't stop them. We can.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="num">9/10</div>
+        <div class="label">Homes lost to embers</div>
+        <div class="desc">Not direct flames. Ember intrusion is the #1 ignition pathway in wildfires.</div>
+      </div>
+      <div class="stat">
+        <div class="num">1mi+</div>
+        <div class="label">Ember travel distance</div>
+        <div class="desc">Embers can land more than a mile ahead of the active fire front.</div>
+      </div>
+      <div class="stat">
+        <div class="num">3.2M</div>
+        <div class="label">Colorado homes at risk</div>
+        <div class="desc">Properties in the Wildland-Urban Interface across the Front Range and mountain towns.</div>
+      </div>
+      <div class="stat">
+        <div class="num">82%</div>
+        <div class="label">Insurance rate hikes</div>
+        <div class="desc">Average premium increase in CO wildfire zones since 2020. Many policies non-renewing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-flame"></div>
+
+<!-- ============ SYSTEM / 4 LAYERS ============ -->
+<section class="section-dark" id="system">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The Ponderosa System</span>
+      <h2>Four layers of <span class="accent">defense.</span><br/>One coordinated system.</h2>
+      <p>Sprinklers alone fail when power and water cut out. Mesh alone can't stop a hot vegetation fire at your fence line. Native plants alone won't shield your roof. We combine every proven layer into one engineered defense — designed for Colorado's wind, snow, drought, and ember storms.</p>
+    </div>
+
+    <div class="layers">
+      <article class="layer">
+        <div class="num">Layer 01</div>
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M24 6c0 6-6 10-6 16a6 6 0 0 0 12 0c0-6-6-10-6-16z"/>
+          <path d="M16 30c0 8 4 12 8 12s8-4 8-12"/>
+        </svg>
+        <h3>Eco-Safe Retardant Application</h3>
+        <p>Komodo plant-based fire retardant applied to roof, siding, decks, and perimeter vegetation. Forms a protective barrier that resists ignition and slows fire spread — and stays effective for months until heavy rainfall.</p>
+        <ul>
+          <li>Non-toxic · biodegradable · pet, pollinator, and water-system safe</li>
+          <li>Persists through Colorado's peak fire season</li>
+          <li>No PFAS, no harsh chemicals, no permanent residue</li>
+        </ul>
+      </article>
+
+      <article class="layer">
+        <div class="num">Layer 02</div>
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="6" y="6" width="36" height="36" rx="2"/>
+          <path d="M6 14h36 M6 22h36 M6 30h36 M6 38h36 M14 6v36 M22 6v36 M30 6v36 M38 6v36"/>
+        </svg>
+        <h3>Ember-Blocking Stainless Mesh</h3>
+        <p>Wildfire Defense Mesh installed over every ember entry point — gable vents, foundation vents, soffits, deck skirting, gutter guards, and bird-stops. Up to 98% effective at blocking embers and reduces radiant heat by ~38%.</p>
+        <ul>
+          <li>Patent-pending stainless steel · ASTM E2886 tested</li>
+          <li>Meets California Chapter 7A — the country's strictest standard</li>
+          <li>Permanent. Install once. Protected for the life of your home.</li>
+        </ul>
+      </article>
+
+      <article class="layer">
+        <div class="num">Layer 03</div>
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M24 4v12 M24 16c-6 0-10 4-10 10s4 10 10 10 10-4 10-10-4-10-10-10z"/>
+          <path d="M14 26c-4 0-8 2-10 6 M34 26c4 0 8 2 10 6 M14 44h20"/>
+        </svg>
+        <h3>Fire-Wise Native Landscape Design</h3>
+        <p>Defensible-space zoning from 0–100 ft using Colorado-native, low-flammability plants. We remove ignition points without scorching your yard — replacing them with beautiful, drought-tolerant, fire-resistant species that thrive in our climate.</p>
+        <ul>
+          <li>Native plant consultation by certified ecologists</li>
+          <li>Ember-resistant perimeter strategy (Zone 0, 1, 2)</li>
+          <li>Reduces ignition risk at the source: fuel</li>
+        </ul>
+      </article>
+
+      <article class="layer">
+        <div class="num">Layer 04</div>
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 28h28v14H10z"/>
+          <path d="M14 28V18c0-6 4-10 10-10s10 4 10 10v10"/>
+          <circle cx="24" cy="35" r="2.5"/>
+        </svg>
+        <h3>Resilient Water &amp; Smart Activation</h3>
+        <p>On-site water storage, gas-powered backup pumps, and roof + perimeter sprinkler zones that work even when the grid and city water are down. Optional smart activation triggers on temperature, smoke, or fire-proximity alerts.</p>
+        <ul>
+          <li>1,500–10,000 gal storage · grid-independent pump systems</li>
+          <li>Optional gravity-fed fail-safe — works without power</li>
+          <li>Smart triggers (heat, smoke, API alerts) on Resilience+ tiers</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIERS / PACKAGES ============ -->
+<section class="section-cream" id="tiers">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Service Packages</span>
+      <h2 style="color:#1A130D">Built for every property,<br/><span style="color:var(--orange-deep)">every budget.</span></h2>
+      <p style="color:#3D2C20">From a single-season retardant application to a fully integrated, grid-independent defense system, we scope the right layers for your home, exposure, and risk profile.</p>
+    </div>
+
+    <div class="tiers">
+      <!-- Essentials -->
+      <div class="tier" style="background:linear-gradient(180deg,#FFFFFF 0%, #F7EFE1 100%);color:#1A130D;border-color:rgba(26,19,13,.12)">
+        <div class="tier-name" style="color:#1A130D">Essentials</div>
+        <div class="tier-phase">Annual Defense · Phase 1</div>
+        <div class="tier-price" style="color:#1A130D">$1,200<small>+ / season</small></div>
+        <p class="tier-tagline" style="color:#3D2C20">Risk assessment + eco-safe retardant treatment before peak fire season. Best for lower-exposure properties.</p>
+        <ul class="tier-feats" style="color:#1A130D">
+          <li>Wildfire risk assessment &amp; mitigation plan</li>
+          <li>Komodo retardant on roof, siding, decks</li>
+          <li>Perimeter vegetation treatment (50–100 ft)</li>
+          <li>Gutter clean-out &amp; ember audit</li>
+          <li>Pre-season re-application reminder</li>
+        </ul>
+        <a class="btn btn-ghost" href="#assess" style="border-color:rgba(26,19,13,.2);color:#1A130D">Get a Quote <span class="arrow">→</span></a>
+      </div>
+
+      <!-- Resilience (featured) -->
+      <div class="tier featured" style="background:linear-gradient(180deg,#1A130B 0%, #0C0907 100%);">
+        <div class="ribbon">Most Popular</div>
+        <div class="tier-name">Resilience</div>
+        <div class="tier-phase">Integrated System · Phase 2–3</div>
+        <div class="tier-price">$5,800<small>+ installed</small></div>
+        <p class="tier-tagline">Permanent ember-blocking mesh + roof &amp; perimeter sprinklers + native landscape transition + annual retardant maintenance.</p>
+        <ul class="tier-feats">
+          <li>Everything in Essentials</li>
+          <li>Wildfire Defense Mesh on all vents, soffits, decks</li>
+          <li>Roof-ridge + perimeter sprinkler zones</li>
+          <li>Native fire-wise plant consultation (Zone 0–1)</li>
+          <li>Annual maintenance &amp; re-treatment included</li>
+        </ul>
+        <a class="btn btn-primary" href="#assess">Book Assessment <span class="arrow">→</span></a>
+      </div>
+
+      <!-- Full Defense Platform -->
+      <div class="tier">
+        <div class="tier-name">Full Defense Platform</div>
+        <div class="tier-phase">Grid-Independent · Phase 4–5</div>
+        <div class="tier-price">$14,500<small>+ installed</small></div>
+        <p class="tier-tagline">A complete, redundant defense platform engineered to function without grid power or city water. Built for high-exposure homes.</p>
+        <ul class="tier-feats">
+          <li>Everything in Resilience</li>
+          <li>1,500–10,000 gal water storage + gas pump</li>
+          <li>Multi-zone roof + perimeter spray automation</li>
+          <li>Smart activation (heat / smoke / fire-proximity API)</li>
+          <li>Full native landscape redesign (Zone 0–2)</li>
+          <li>Subscription monitoring &amp; readiness testing</li>
+        </ul>
+        <a class="btn btn-ghost" href="#assess">Talk to a Designer <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <p style="margin-top:32px;font-size:13px;color:#5C4736;text-align:center">Each system is custom-scoped to your property. Pricing reflects typical installs — your assessment includes a fixed quote.</p>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="section-dark" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">How It Works</span>
+      <h2>From <span class="accent">first call</span> to fully protected — in weeks, not seasons.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Assess</h4>
+        <p>A certified wildfire technician walks your property, reviews wind &amp; fuel exposure, and maps every ember entry point. You get a written defense plan within 5 days.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Design</h4>
+        <p>We scope the right combination of layers — mesh, retardant, landscape, water — and deliver a fixed quote. No surprises, no oversized systems.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Install</h4>
+        <p>Our crews install in 1–5 days depending on system size. Most homes are protected before the next red-flag warning hits the Front Range.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Maintain</h4>
+        <p>Annual re-application, pre-season inspection, and pump &amp; sensor testing. Wildfire defense is a discipline, not a one-time install.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIFFERENTIATOR ============ -->
+<section class="section-char">
+  <div class="wrap">
+    <div class="diff-grid">
+      <div>
+        <span class="eyebrow">Why Ponderosa</span>
+        <h2 class="display" style="font-size:clamp(40px,5vw,62px);margin-top:14px">
+          Built for Colorado.<br/>
+          <span style="color:var(--orange)">Safe for the land.</span>
+        </h2>
+        <p style="margin-top:20px;color:rgba(255,246,232,.78);font-size:17px;line-height:1.6;max-width:520px">
+          We're locals. We've watched fires come over the ridge. We refuse to defend your home with chemicals that poison the watershed, or with sprinkler systems that fail the moment the grid goes down. Every layer of Ponderosa is engineered for the way wildfires actually behave here — and for the ecosystem we all share.
+        </p>
+      </div>
+      <div class="diff-vs">
+        <div class="diff-col them">
+          <h5>Conventional Approach</h5>
+          <ul>
+            <li>Toxic retardants (PFAS concerns)</li>
+            <li>Sprinklers fail in power &amp; water outages</li>
+            <li>Single-layer protection</li>
+            <li>Generic landscape clear-cuts</li>
+            <li>One-time install, no maintenance</li>
+          </ul>
+        </div>
+        <div class="diff-col us">
+          <h5>The Ponderosa System</h5>
+          <ul>
+            <li>Plant-based, biodegradable retardants</li>
+            <li>Grid-independent water + pump infrastructure</li>
+            <li>Four engineered layers, working together</li>
+            <li>Native fire-wise landscape design</li>
+            <li>Annual maintenance &amp; readiness program</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNERS ============ -->
+<section class="section-dark" id="partners">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Partner Products</span>
+      <h2>We install only the <span class="accent">most-tested</span><br/>products on the market.</h2>
+      <p>Not the cheapest. Not the flashiest. The ones with independent testing, real lab data, and proven field performance in real wildfire conditions.</p>
+    </div>
+
+    <div class="partner-grid">
+      <div class="partner">
+        <div class="ptag">Retardant Partner</div>
+        <h4>Komodo Fire Systems</h4>
+        <p>Plant-based, environmentally safe fire retardant trusted by professional fire mitigation crews across the West. Persistent protection that lasts through peak fire season.</p>
+        <div class="pstat">
+          <div><div class="v">0</div><div class="k">PFAS · Toxics</div></div>
+          <div><div class="v">6mo</div><div class="k">Effective duration</div></div>
+        </div>
+      </div>
+      <div class="partner">
+        <div class="ptag">Mesh Partner</div>
+        <h4>Wildfire Defense Mesh</h4>
+        <p>Specialty-engineered stainless steel ember mesh, ASTM E2886 tested and compliant with California Chapter 7A — the country's strictest wildfire safety code. Featured in Forbes, NPR, NBC.</p>
+        <div class="pstat">
+          <div><div class="v">98%</div><div class="k">Ember-blocking</div></div>
+          <div><div class="v">38%</div><div class="k">Radiant heat ↓</div></div>
+        </div>
+      </div>
+      <div class="partner">
+        <div class="ptag">Ecology Partner</div>
+        <h4>Native Plant Consultation</h4>
+        <p>Independent Colorado ecologists who design defensible-space landscapes from native, low-flammability species. Beautiful, drought-hardy, and fire-wise — without scorched-earth clear-cutting.</p>
+        <div class="pstat">
+          <div><div class="v">100ft</div><div class="k">Defensible zoning</div></div>
+          <div><div class="v">CO</div><div class="k">Native-species only</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICE AREA ============ -->
+<section class="section-char" id="area">
+  <div class="wrap">
+    <div class="area">
+      <div>
+        <span class="eyebrow">Service Area</span>
+        <h2 class="display" style="font-size:clamp(40px,5vw,62px);margin-top:14px">Colorado's<br/><span style="color:var(--orange)">Wildland-Urban Interface.</span></h2>
+        <p style="margin-top:18px;color:rgba(255,246,232,.78);font-size:17px;line-height:1.6;max-width:520px">
+          We serve homes along the Front Range and into Colorado's mountain communities — anywhere wildfire risk is real and homeowners deserve more than a brochure from the county.
+        </p>
+        <ul class="cities">
+          <li>Boulder</li>
+          <li>Louisville</li>
+          <li>Superior</li>
+          <li>Lyons</li>
+          <li>Nederland</li>
+          <li>Estes Park</li>
+          <li>Evergreen</li>
+          <li>Conifer</li>
+          <li>Golden</li>
+          <li>Pine</li>
+          <li>Bailey</li>
+          <li>Fort Collins</li>
+        </ul>
+      </div>
+      <div class="area-map" aria-hidden="true">
+        <!-- Stylized CO map with service dots -->
+        <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+          <defs>
+            <linearGradient id="ridge" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1B1108"/>
+              <stop offset="100%" stop-color="#0A0706"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="320" fill="#0E0907"/>
+          <!-- Colorado outline -->
+          <rect x="40" y="50" width="320" height="220" fill="url(#ridge)" stroke="#F18A1F" stroke-width="1.5" opacity=".9"/>
+          <!-- Mountain ridge through CO -->
+          <path d="M40 170 L 80 140 L 110 165 L 140 130 L 180 155 L 210 125 L 250 150 L 290 130 L 320 160 L 360 145"
+                fill="none" stroke="#F18A1F" stroke-width="1" opacity=".45" stroke-dasharray="3 3"/>
+          <!-- City dots: Boulder/Front Range cluster -->
+          <g fill="#F18A1F">
+            <circle cx="230" cy="155" r="5"/>
+            <circle cx="245" cy="170" r="4"/>
+            <circle cx="250" cy="145" r="4"/>
+            <circle cx="240" cy="195" r="4"/>
+            <circle cx="225" cy="180" r="4"/>
+            <circle cx="215" cy="130" r="4"/>
+            <circle cx="265" cy="160" r="3"/>
+            <circle cx="200" cy="200" r="4"/>
+            <circle cx="190" cy="155" r="3"/>
+            <circle cx="260" cy="210" r="3"/>
+            <circle cx="270" cy="185" r="3"/>
+            <circle cx="285" cy="170" r="3"/>
+          </g>
+          <!-- Glow ring around Boulder -->
+          <circle cx="230" cy="170" r="55" fill="none" stroke="#F18A1F" stroke-width="1" opacity=".25"/>
+          <circle cx="230" cy="170" r="75" fill="none" stroke="#F18A1F" stroke-width="1" opacity=".12"/>
+          <!-- Labels -->
+          <g font-family="Oswald,sans-serif" fill="#FFF6E8" opacity=".8" font-size="11" letter-spacing="2">
+            <text x="50" y="40" opacity=".5">COLORADO</text>
+            <text x="290" y="155" font-size="9">BOULDER CO.</text>
+            <text x="155" y="240" font-size="9">FRONT RANGE</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section-dark">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">From Our Neighbors</span>
+      <h2>Colorado homeowners,<br/><span class="accent">protected.</span></h2>
+    </div>
+    <div class="tests">
+      <div class="test">
+        <div class="stars">★★★★★</div>
+        <div class="body">"After Marshall, my insurance threatened non-renewal. The Ponderosa team installed a Resilience system in three days — and my carrier renewed at the previous rate. I sleep through red-flag warnings now."</div>
+        <div class="who"><strong>Sarah K.</strong> · Louisville, CO</div>
+      </div>
+      <div class="test">
+        <div class="stars">★★★★★</div>
+        <div class="body">"We have a creek, a dog, and a pollinator garden. Every other 'fire protection' company wanted to spray something we couldn't pronounce. Ponderosa's eco-safe approach was the only one we'd let on the property."</div>
+        <div class="who"><strong>Mark &amp; Lena R.</strong> · Nederland, CO</div>
+      </div>
+      <div class="test">
+        <div class="stars">★★★★★</div>
+        <div class="body">"They mapped 14 ember entry points I didn't know existed. The mesh installation alone made me feel ten times safer — and the native landscape redesign is honestly beautiful."</div>
+        <div class="who"><strong>David T.</strong> · Evergreen, CO</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section-char" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Common Questions</span>
+      <h2>What homeowners <span class="accent">ask first.</span></h2>
+    </div>
+    <div class="faq">
+      <details class="faq-item" open>
+        <summary>Is the retardant really safe for pets, plants, and water?<span class="plus">+</span></summary>
+        <div class="ans">Yes. We exclusively use Komodo's plant-based, biodegradable retardant. It contains no PFAS, no toxic surfactants, and is engineered to break down naturally without contaminating soil or water systems. Safe for kids, dogs, chickens, pollinators, and food gardens.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How long does the retardant last?<span class="plus">+</span></summary>
+        <div class="ans">A standard pre-season application persists 4–6 months under typical Colorado conditions and only washes off in a sustained, heavy rainfall. We time treatments to peak fire season (typically May–October on the Front Range, longer in mountain towns).</div>
+      </details>
+      <details class="faq-item">
+        <summary>Does the mesh damage my home or its aesthetics?<span class="plus">+</span></summary>
+        <div class="ans">No. Wildfire Defense Mesh installs flush against vents and soffits, and comes in black, bronze, or white finishes that blend with most exteriors. It's permanent, low-profile, and code-compliant. Most homeowners don't notice it after install.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens if the power and water are out during a fire?<span class="plus">+</span></summary>
+        <div class="ans">That's the entire point of our Resilience and Full Defense Platform tiers. On-site water storage, gas-powered pumps, and optional gravity-fed fail-safes mean your defense system functions independent of grid power and municipal water. This is the single biggest gap in conventional sprinkler systems.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Will this lower my insurance premiums?<span class="plus">+</span></summary>
+        <div class="ans">Often yes. Several Colorado insurers now offer premium discounts or reverse non-renewal decisions when homeowners install hardened defense systems. We provide documentation packets you can submit to your carrier, and we're actively working with regional insurers on formal partnership programs.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need permits?<span class="plus">+</span></summary>
+        <div class="ans">Mesh retrofits and retardant applications typically do not require permits. Roof-mounted sprinkler systems and water storage installations may require local permitting — we handle the permitting process as part of any Resilience or Full Defense install.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How quickly can you install before fire season?<span class="plus">+</span></summary>
+        <div class="ans">Essentials treatments take a single day. Resilience installs are typically 2–4 days. Full Defense Platform builds run 5–10 days depending on water storage scope. We prioritize properties in active red-flag conditions and book the May–June window heavily — reserve your assessment early.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA / FORM ============ -->
+<section class="cta-section" id="assess">
+  <div class="wrap">
+    <div class="cta-grid">
+      <div class="cta-side">
+        <span class="eyebrow">Free Property Assessment</span>
+        <h2>Know your <span class="accent">real risk</span> — and what it would take to defend against it.</h2>
+        <p>Every assessment is delivered by a certified wildfire technician who walks your property in person. You get a written defense plan, photo-mapped ember entry points, and a fixed-price quote — no obligation, no pressure.</p>
+        <ul class="cta-bullets">
+          <li>On-site walk-through with a certified technician (45–90 min)</li>
+          <li>Written defense plan + photo-mapped ember audit within 5 days</li>
+          <li>Fixed-price quote with packages scoped to your exposure</li>
+          <li>Insurance documentation packet included</li>
+        </ul>
+      </div>
+
+      <form class="form-card" onsubmit="event.preventDefault(); this.querySelector('button').innerText='Request received ✓'; this.querySelector('button').disabled=true;">
+        <h3>Book Your Free Assessment</h3>
+        <p class="sub">We'll respond within one business day to schedule.</p>
+        <div class="form-row">
+          <div class="field">
+            <label for="fname">First Name</label>
+            <input id="fname" name="fname" type="text" required placeholder="Sarah">
+          </div>
+          <div class="field">
+            <label for="lname">Last Name</label>
+            <input id="lname" name="lname" type="text" required placeholder="Kowalski">
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" required placeholder="(303) 555-0173">
+        </div>
+        <div class="field">
+          <label for="address">Property Address</label>
+          <input id="address" name="address" type="text" required placeholder="Street address, city, ZIP">
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="type">Property Type</label>
+            <select id="type" name="type">
+              <option>Single-family home</option>
+              <option>Mountain cabin</option>
+              <option>Ranch / acreage</option>
+              <option>HOA / community</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="interest">I'm Interested In</label>
+            <select id="interest" name="interest">
+              <option>Not sure yet — start with assessment</option>
+              <option>Essentials (retardant)</option>
+              <option>Resilience (full system)</option>
+              <option>Full Defense Platform</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="notes">Anything we should know? (optional)</label>
+          <textarea id="notes" name="notes" placeholder="Lot size, exposure, prior fire history, timing..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Request Free Assessment →</button>
+        <p class="consent">By submitting, you consent to be contacted by Ponderosa Fire Protection. We never share your information. No spam, ever.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <svg class="brand-mark" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M50 4 C 30 8, 14 12, 8 18 L 8 60 C 8 84, 28 100, 50 106 C 72 100, 92 84, 92 60 L 92 18 C 86 12, 70 8, 50 4 Z" fill="#F18A1F" stroke="#0A0A0A" stroke-width="5" stroke-linejoin="round"/>
+            <g fill="#0A0A0A">
+              <polygon points="50,18 42,30 47,30 38,42 46,42 34,56 44,56 30,72 70,72 56,56 66,56 54,42 62,42 53,30 58,30"/>
+              <rect x="47" y="72" width="6" height="22" rx="1"/>
+            </g>
+          </svg>
+          <div class="brand-text">
+            <span class="name">Ponderosa</span>
+            <span class="sub">Fire Protection</span>
+          </div>
+        </a>
+        <p>Colorado-based, eco-safe wildfire defense for homes, ranches, and communities along the Front Range and into the high country.</p>
+      </div>
+      <div class="foot-col">
+        <h6>The System</h6>
+        <ul>
+          <li><a href="#system">Retardant</a></li>
+          <li><a href="#system">Mesh</a></li>
+          <li><a href="#system">Landscape</a></li>
+          <li><a href="#system">Water &amp; Pumps</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h6>Packages</h6>
+        <ul>
+          <li><a href="#tiers">Essentials</a></li>
+          <li><a href="#tiers">Resilience</a></li>
+          <li><a href="#tiers">Full Defense Platform</a></li>
+          <li><a href="#tiers">Annual Maintenance</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h6>Contact</h6>
+        <ul>
+          <li><a href="tel:7205550117">(720) 555-0117</a></li>
+          <li><a href="mailto:hello@ponderosafire.com">hello@ponderosafire.com</a></li>
+          <li>Boulder, CO</li>
+          <li><a href="#assess">Free Assessment →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Ponderosa Fire Protection · Boulder, CO</span>
+      <span>Komodo · Wildfire Defense Mesh Partner Installer</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
