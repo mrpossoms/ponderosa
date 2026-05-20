@@ -24,12 +24,17 @@ site/
   Makefile
   root/
     etc/nginx/sites-available/ponderosafireprotection.com   # nginx vhost config
-    var/www/ponderosafireprotection.com/html/index.html     # the entire site
+    var/www/ponderosafireprotection.com/html/
+      styles.css    # shared base styles (variables, reset, typography, buttons, brand, ember animation)
+      index.html    # coming soon landing page
+      home.html     # full marketing site
 ```
 
 ## Site architecture
 
-`index.html` is organized as a single long page with anchor-linked sections in this order:
+`index.html` is the coming soon page: full-viewport centered layout with the shield/pine logo, brand name, and an animated ember particle effect. All styles are in a `<style>` block scoped to that page plus the shared `styles.css`.
+
+`home.html` is the full marketing site organized as a single long page with anchor-linked sections in this order:
 
 1. **Nav** — sticky, backdrop-blur, hides links/phone below 900px
 2. **Hero** (`#top`) — two-column grid with animated ember dots (CSS keyframes) and an inline SVG scene
@@ -47,7 +52,7 @@ site/
 
 ## CSS conventions
 
-All CSS lives in the single `<style>` block (lines 11–445 of `index.html`). CSS custom properties on `:root` define the color palette:
+Shared base styles live in `styles.css`. Page-specific styles are in inline `<style>` blocks in each HTML file. CSS custom properties on `:root` (in `styles.css`) define the color palette:
 
 - `--orange` / `--orange-deep` / `--ember` — brand fire tones
 - `--black` / `--char` / `--char-2` — dark backgrounds
