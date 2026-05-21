@@ -171,6 +171,14 @@
       border-radius: 3px;
       transition: width .3s;
     }
+    #progress-bar.indeterminate {
+      width: 30% !important;
+      animation: progress-slide 1.2s ease-in-out infinite;
+    }
+    @keyframes progress-slide {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(430%); }
+    }
     #upload-label { font-size: .9rem; opacity: .7; min-height: 1.4em; }
 
     /* ===== Email screen ===== */
@@ -300,6 +308,7 @@ let recentScores    = [];
 let trajectory      = [];   // {lat, lon, alpha, beta, gamma, t, frameId}
 let currentPose     = {lat: null, lon: null, alpha: 0, beta: 0, gamma: 0};
 let rafHandle       = null;
+let frameUploads    = [];   // promises for each frame POST
 
 const video         = document.getElementById('viewfinder');
 const scoreCanvas   = document.createElement('canvas');
@@ -482,19 +491,37 @@ function captureAndSend() {
     gamma: currentPose.gamma,
   });
 
-  out.toBlob(blob => {
-    fetch(`${INTAKE_BASE}/survey/${surveyId}/image/${frameId}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'image/jpeg' },
-      body: blob,
-    }).catch(() => {});  // best-effort during recording
-  }, 'image/jpeg', SEND_QUALITY);
+  const upload = new Promise(resolve => {
+    out.toBlob(blob => {
+      fetch(`${INTAKE_BASE}/survey/${surveyId}/image/${frameId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'image/jpeg' },
+        body: blob,
+      }).then(resolve, resolve);  // resolve on success or failure — best-effort
+    }, 'image/jpeg', SEND_QUALITY);
+  });
+  frameUploads.push(upload);
 }
 
 // ─── Upload trajectory then signal done ───────────────────────────────────────
 async function uploadAll() {
   showScreen('upload');
-  setProgress(0, 'Uploading trajectory…');
+
+  const total = frameUploads.length;
+  let done = 0;
+
+  setProgress(0, `Uploading images… 0 / ${total}`);
+  document.getElementById('progress-bar').classList.add('indeterminate');
+
+  // Wait for all frame uploads, updating progress as each settles
+  await Promise.all(frameUploads.map(p => p.then(() => {
+    done++;
+    document.getElementById('progress-bar').classList.remove('indeterminate');
+    const pct = Math.round((done / (total + 1)) * 100);  // +1 reserves room for trajectory
+    setProgress(pct, `Uploading images… ${done} / ${total}`);
+  })));
+
+  setProgress(Math.round(total / (total + 1) * 100), 'Finalizing…');
 
   try {
     await fetch(`${INTAKE_BASE}/survey/${surveyId}/trajectory`, {
