@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Property Audit — Ponderosa Fire Protection</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { overflow: hidden; height: 100dvh; display: flex; flex-direction: column; }
+
+    /* ===== Wizard shell ===== */
+    #wizard {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .screen {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      gap: 1.25rem;
+    }
+    .screen.active { display: flex; }
+
+    /* ===== Intro screen ===== */
+    #screen-intro .logo { width: 72px; margin-bottom: .5rem; }
+    #screen-intro h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+    #screen-intro p { max-width: 34ch; color: var(--cream); opacity: .75; }
+
+    /* ===== Permission screen ===== */
+    #screen-perms .icon { font-size: 3rem; }
+    #screen-perms ul {
+      list-style: none;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      font-size: .95rem;
+      opacity: .8;
+    }
+    #screen-perms ul li::before { content: '→ '; color: var(--orange); }
+
+    /* ===== Record screen ===== */
+    #screen-record {
+      padding: 0;
+      position: relative;
+      justify-content: flex-start;
+      background: #000;
+    }
+
+    #viewfinder {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
+    #hud {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    #hud-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 1rem 1rem 0;
+      gap: .75rem;
+    }
+
+    #instruction-box {
+      background: rgba(10,10,10,.72);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      padding: .6rem .9rem;
+      font-size: .88rem;
+      line-height: 1.4;
+      max-width: 60%;
+      text-align: left;
+    }
+
+    #status-box {
+      background: rgba(10,10,10,.72);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      padding: .5rem .75rem;
+      font-size: .78rem;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      gap: .2rem;
+      min-width: 80px;
+      text-align: right;
+    }
+    #status-box span { color: var(--orange); }
+
+    #hud-bottom {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 1.5rem 2.5rem;
+      gap: 2rem;
+      pointer-events: all;
+    }
+
+    #btn-record {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 4px solid var(--cream);
+      background: var(--ember);
+      box-shadow: 0 0 0 0 rgba(255,69,0,.5);
+      transition: transform .1s, box-shadow .2s;
+      cursor: pointer;
+    }
+    #btn-record.recording {
+      background: #c0392b;
+      animation: pulse 1.4s infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0   rgba(255,69,0,.55); }
+      70%  { box-shadow: 0 0 0 18px rgba(255,69,0,0);  }
+      100% { box-shadow: 0 0 0 0   rgba(255,69,0,0);   }
+    }
+
+    #btn-finish {
+      font-family: 'Oswald', sans-serif;
+      font-size: .9rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: .7;
+      background: rgba(10,10,10,.6);
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: .55rem 1.1rem;
+      pointer-events: all;
+      display: none;
+    }
+    #btn-finish.visible { display: block; }
+
+    /* ===== Upload screen ===== */
+    #screen-upload .progress-wrap {
+      width: min(320px, 80vw);
+      height: 6px;
+      background: var(--line-strong);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--orange);
+      border-radius: 3px;
+      transition: width .3s;
+    }
+    #upload-label { font-size: .9rem; opacity: .7; min-height: 1.4em; }
+
+    /* ===== Email screen ===== */
+    #screen-email input[type="email"] {
+      width: min(320px, 80vw);
+      padding: .85rem 1rem;
+      border-radius: 8px;
+      border: 1.5px solid var(--line-strong);
+      background: var(--char);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+    }
+    #screen-email input[type="email"]::placeholder { opacity: .45; }
+    #screen-email input[type="email"]:focus { outline: none; border-color: var(--orange); }
+
+    /* ===== Done screen ===== */
+    #screen-done .checkmark { font-size: 3.5rem; }
+
+    /* ===== Shared button ===== */
+    .btn-primary {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--black);
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 8px;
+      padding: .85rem 2rem;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+    }
+    .btn-primary:active { transform: scale(.97); }
+    .btn-primary:hover  { background: var(--orange-deep); }
+    .btn-primary:disabled { opacity: .45; pointer-events: none; }
+  </style>
+</head>
+<body>
+<div id="wizard">
+
+  <!-- 1. Intro -->
+  <div id="screen-intro" class="screen active">
+    <img class="logo" src="/imgs/logo-sm.svg" alt="Ponderosa">
+    <h1 class="display">Property<br>Audit</h1>
+    <p>Walk the perimeter of your home and outbuildings. We'll analyze your footage and send you a personalized fire-risk report.</p>
+    <button class="btn-primary" onclick="showScreen('email')">Get Started</button>
+  </div>
+
+  <!-- 2. Email -->
+  <div id="screen-email" class="screen">
+    <div class="icon">✉️</div>
+    <h2 class="display" style="font-size:2.4rem">Your Report</h2>
+    <p style="opacity:.75;max-width:32ch">Enter your email and we'll send your personalized fire-risk report within 24 hours.</p>
+    <input type="email" id="input-email" placeholder="you@example.com" autocomplete="email">
+    <button class="btn-primary" id="btn-email-next" onclick="submitEmail()">Next</button>
+    <p id="email-error" style="color:var(--ember);font-size:.85rem;display:none"></p>
+  </div>
+
+  <!-- 3. Permissions -->
+  <div id="screen-perms" class="screen">
+    <div class="icon">📷</div>
+    <h2 class="display" style="font-size:2.4rem">Before we begin</h2>
+    <p style="opacity:.75;max-width:32ch">We need a few permissions to record your audit:</p>
+    <ul>
+      <li>Camera — to capture your property</li>
+      <li>Location — to map findings to your land</li>
+      <li>Motion — to track your path and orientation</li>
+    </ul>
+    <button class="btn-primary" id="btn-grant" onclick="requestPermissions()">Allow &amp; Continue</button>
+    <p id="perms-error" style="color:var(--ember);font-size:.85rem;display:none"></p>
+  </div>
+
+  <!-- 3. Record -->
+  <div id="screen-record" class="screen">
+    <video id="viewfinder" autoplay playsinline muted></video>
+    <div id="hud">
+      <div id="hud-top">
+        <div id="instruction-box">Walk slowly around your buildings, keeping them in frame.</div>
+        <div id="status-box">
+          <div>Frames <span id="stat-sent">0</span></div>
+          <div>GPS <span id="stat-gps">—</span></div>
+        </div>
+      </div>
+      <div id="hud-bottom">
+        <button id="btn-record" title="Start recording" onclick="toggleRecording()"></button>
+        <button id="btn-finish" onclick="finishRecording()">Finish</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Upload -->
+  <div id="screen-upload" class="screen">
+    <h2 class="display" style="font-size:2.4rem">Uploading…</h2>
+    <div class="progress-wrap"><div id="progress-bar"></div></div>
+    <p id="upload-label">Preparing…</p>
+  </div>
+
+  <!-- 5. Done -->
+  <div id="screen-done" class="screen">
+    <div class="checkmark">✅</div>
+    <h2 class="display" style="font-size:2.4rem">All Done!</h2>
+    <p style="opacity:.75;max-width:34ch">Your audit has been submitted. We'll email you a personalized fire-risk report within 24 hours.</p>
+    <a href="/" class="btn-primary">Back to Home</a>
+  </div>
+
+</div>
+
+<script>
+// ─── State ────────────────────────────────────────────────────────────────────
+const INTAKE_BASE = window.location.hostname === 'app.ponderosafireprotection.com'
+  ? 'https://api.ponderosafireprotection.com'
+  : `http://${window.location.hostname}:8001`;
+const COOLDOWN_MS   = 2000;
+const SCORE_WIDTH   = 320;
+const SEND_QUALITY  = 0.85;
+
+let surveyId        = null;
+let userEmail       = null;
+let stream          = null;
+let recording       = false;
+let frameCount      = 0;
+let lastSentAt      = 0;
+let recentScores    = [];
+let trajectory      = [];   // {lat, lon, alpha, beta, gamma, t, frameId}
+let currentPose     = {lat: null, lon: null, alpha: 0, beta: 0, gamma: 0};
+let rafHandle       = null;
+
+const video         = document.getElementById('viewfinder');
+const scoreCanvas   = document.createElement('canvas');
+const scoreCtx      = scoreCanvas.getContext('2d');
+scoreCanvas.width   = SCORE_WIDTH;
+
+// ─── Screen navigation ────────────────────────────────────────────────────────
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+}
+
+// ─── Email ────────────────────────────────────────────────────────────────────
+function submitEmail() {
+  const input = document.getElementById('input-email');
+  const err   = document.getElementById('email-error');
+  const email = input.value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    err.textContent = 'Please enter a valid email address.';
+    err.style.display = 'block';
+    return;
+  }
+  err.style.display = 'none';
+  userEmail = email;
+  showScreen('perms');
+}
+
+// ─── Permissions ──────────────────────────────────────────────────────────────
+async function requestPermissions() {
+  const btn = document.getElementById('btn-grant');
+  const err = document.getElementById('perms-error');
+  btn.disabled = true;
+  err.style.display = 'none';
+
+  try {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      throw new Error('Camera API unavailable — the page must be served over HTTPS.');
+    }
+
+    // Must be called synchronously within the gesture handler before any await
+    if (typeof DeviceMotionEvent?.requestPermission === 'function') {
+      const result = await DeviceMotionEvent.requestPermission();
+      if (result !== 'granted') throw new Error('Motion access denied.');
+    }
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 } }
+    });
+    video.srcObject = stream;
+
+    await new Promise(r => video.addEventListener('loadedmetadata', r, { once: true }));
+
+    navigator.geolocation.watchPosition(pos => {
+      currentPose.lat = pos.coords.latitude;
+      currentPose.lon = pos.coords.longitude;
+      document.getElementById('stat-gps').textContent = '✓';
+    }, () => {
+      document.getElementById('stat-gps').textContent = '✗';
+    }, { enableHighAccuracy: true });
+
+    window.addEventListener('deviceorientation', e => {
+      currentPose.alpha = e.alpha;
+      currentPose.beta  = e.beta;
+      currentPose.gamma = e.gamma;
+    });
+
+    surveyId = generateSurveyId(currentPose.lat, currentPose.lon);
+    showScreen('record');
+  } catch (e) {
+    err.textContent = 'Could not access camera or sensors: ' + e.message;
+    err.style.display = 'block';
+    btn.disabled = false;
+  }
+}
+
+// ─── Survey ID ────────────────────────────────────────────────────────────────
+function generateSurveyId(lat, lon) {
+  // Simple base32 geohash-style ID using timestamp + coords
+  const ts  = Date.now().toString(36);
+  const loc = lat != null ? (lat.toFixed(4) + lon.toFixed(4)).replace(/[^0-9]/g, '') : '0000';
+  return ts + loc.slice(0, 8);
+}
+
+// ─── Recording toggle ─────────────────────────────────────────────────────────
+function toggleRecording() {
+  if (!recording) {
+    recording = true;
+    document.getElementById('btn-record').classList.add('recording');
+    document.getElementById('btn-finish').classList.add('visible');
+    document.getElementById('instruction-box').textContent =
+      'Walk slowly around your buildings, keeping them in frame.';
+    rafHandle = requestAnimationFrame(processFrame);
+  } else {
+    pauseRecording();
+  }
+}
+
+function pauseRecording() {
+  recording = false;
+  document.getElementById('btn-record').classList.remove('recording');
+  cancelAnimationFrame(rafHandle);
+}
+
+function finishRecording() {
+  pauseRecording();
+  uploadAll();
+}
+
+// ─── Sharpness scoring ────────────────────────────────────────────────────────
+function sharpnessScore() {
+  const w = scoreCanvas.width;
+  const h = scoreCanvas.height;
+  const { data } = scoreCtx.getImageData(0, 0, w, h);
+
+  const gray = new Float32Array(w * h);
+  for (let i = 0; i < gray.length; i++) {
+    const p = i * 4;
+    gray[i] = 0.299 * data[p] + 0.587 * data[p + 1] + 0.114 * data[p + 2];
+  }
+
+  let sum = 0, sumSq = 0, n = 0;
+  for (let y = 1; y < h - 1; y++) {
+    for (let x = 1; x < w - 1; x++) {
+      const i   = y * w + x;
+      const lap = -gray[i - w] - gray[i - 1] + 4 * gray[i] - gray[i + 1] - gray[i + w];
+      sum   += lap;
+      sumSq += lap * lap;
+      n++;
+    }
+  }
+  const mean = sum / n;
+  return (sumSq / n) - (mean * mean);
+}
+
+function adaptiveThreshold() {
+  if (recentScores.length < 10) return 0;
+  const sorted = [...recentScores].sort((a, b) => a - b);
+  return sorted[Math.floor(sorted.length * 0.75)];
+}
+
+// ─── Frame processing loop ────────────────────────────────────────────────────
+function processFrame() {
+  if (!recording) return;
+
+  const aspect   = video.videoHeight / video.videoWidth;
+  scoreCanvas.height = Math.round(SCORE_WIDTH * aspect);
+  scoreCtx.drawImage(video, 0, 0, scoreCanvas.width, scoreCanvas.height);
+
+  const score = sharpnessScore();
+  recentScores.push(score);
+  if (recentScores.length > 60) recentScores.shift();
+
+  const now = Date.now();
+  if (score > adaptiveThreshold() && (now - lastSentAt) > COOLDOWN_MS) {
+    lastSentAt = now;
+    captureAndSend();
+  }
+
+  rafHandle = requestAnimationFrame(processFrame);
+}
+
+// ─── Capture full-res and send ────────────────────────────────────────────────
+function captureAndSend() {
+  const out  = document.createElement('canvas');
+  out.width  = video.videoWidth;
+  out.height = video.videoHeight;
+  out.getContext('2d').drawImage(video, 0, 0);
+
+  const frameId = ++frameCount;
+  document.getElementById('stat-sent').textContent = frameId;
+
+  // Record pose for trajectory
+  trajectory.push({
+    frameId,
+    t:     Date.now(),
+    lat:   currentPose.lat,
+    lon:   currentPose.lon,
+    alpha: currentPose.alpha,
+    beta:  currentPose.beta,
+    gamma: currentPose.gamma,
+  });
+
+  out.toBlob(blob => {
+    fetch(`${INTAKE_BASE}/survey/${surveyId}/image/${frameId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'image/jpeg' },
+      body: blob,
+    }).catch(() => {});  // best-effort during recording
+  }, 'image/jpeg', SEND_QUALITY);
+}
+
+// ─── Upload trajectory then signal done ───────────────────────────────────────
+async function uploadAll() {
+  showScreen('upload');
+  setProgress(0, 'Uploading trajectory…');
+
+  try {
+    await fetch(`${INTAKE_BASE}/survey/${surveyId}/trajectory`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ surveyId, email: userEmail, trajectory }),
+    });
+    setProgress(100, 'Done!');
+    setTimeout(() => showScreen('done'), 800);
+  } catch (e) {
+    setProgress(0, `Upload failed: ${e.message}`);
+  }
+}
+
+function setProgress(pct, label) {
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('upload-label').textContent = label;
+}
+</script>
+</body>
+</html>

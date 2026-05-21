@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp",
+        "--browser", "webkit",
+        "--device", "iPhone 15",
+        "--ignore-https-errors",
+        "--init-script", "/Users/kirk/repos/ponderosa/.claude/mock-camera.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+[Unit]
+Description=Ponderosa Intake Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/ponderosa/intake
+ExecStart=/opt/ponderosa/intake/run.sh
+Restart=on-failure
+RestartSec=5
+
+Environment=SURVEYS_DIR=/var/ponderosa/surveys
+Environment=RECOMMENDER_PIPE=/var/ponderosa/pipes/recommender
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ponderosa-intake
+
+[Install]
+WantedBy=multi-user.target

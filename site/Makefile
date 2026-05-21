@@ -1,7 +1,11 @@
-.PHONY: serve install
+.PHONY: serve install clean
 
-serve:
-	python -m http.server -d root/var/www/ponderosafireprotection.com/html
+/tmp/ponderosa.http.pid:
+	python serve.py & echo $$! > $@
+
+serve: /tmp/ponderosa.http.pid
+	echo "HTTP server running"
+	
 
 REPO_DIR := $(shell pwd)
 SITE_AVAILABLE := /etc/nginx/sites-available/ponderosafireprotection.com
@@ -12,3 +16,6 @@ install:
 	cp root/etc/nginx/sites-available/ponderosafireprotection.com $(SITE_AVAILABLE)
 	ln -sf $(SITE_AVAILABLE) $(SITE_ENABLED)
 	nginx -t && systemctl reload nginx
+
+clean:
+	kill $$(cat /tmp/ponderosa.http.pid) && rm /tmp/ponderosa.http.pid
