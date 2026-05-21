@@ -8,7 +8,8 @@ SYSTEMD_UNIT    := /etc/systemd/system/ponderosa-intake.service
 install:
 	mkdir -p $(INTAKE_DIR)
 	rsync -a --delete . $(INTAKE_DIR)/
-	pip install -e $(INTAKE_DIR)
+	python3 -m venv $(INTAKE_DIR)/.venv
+	$(INTAKE_DIR)/.venv/bin/pip install -q -e $(INTAKE_DIR)
 	mkdir -p /var/ponderosa/surveys /var/ponderosa/pipes
 	cp root/etc/nginx/sites-available/api.ponderosafireprotection.com $(SITE_AVAILABLE)
 	ln -sf $(SITE_AVAILABLE) $(SITE_ENABLED)

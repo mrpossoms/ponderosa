@@ -23,10 +23,14 @@ mkdir -p "$(dirname "$RECOMMENDER_PIPE")"
 
 PID_FILE=/tmp/ponderosa.intake.pid
 
+UVICORN="$(dirname "$0")/.venv/bin/uvicorn"
+# Fall back to system uvicorn in dev (venv may not exist)
+if [[ ! -x "$UVICORN" ]]; then UVICORN=uvicorn; fi
+
 if [[ "$1" == "--dev" ]]; then
-  uvicorn main:app --reload --host 0.0.0.0 --port 8001 &
+  "$UVICORN" main:app --reload --host 0.0.0.0 --port 8001 &
 else
-  uvicorn main:app --host 0.0.0.0 --port 8001 --workers 2 &
+  "$UVICORN" main:app --host 0.0.0.0 --port 8001 --workers 2 &
 fi
 
 echo $! > "$PID_FILE"
