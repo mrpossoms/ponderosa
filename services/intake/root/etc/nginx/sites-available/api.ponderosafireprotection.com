@@ -10,8 +10,8 @@ server {
     listen 443 ssl;
     server_name api.ponderosafireprotection.com;
 
-    ssl_certificate     /etc/letsencrypt/live/api.ponderosafireprotection.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.ponderosafireprotection.com/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/ponderosafireprotection.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ponderosafireprotection.com/privkey.pem;
     ssl_protocols       TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
 
