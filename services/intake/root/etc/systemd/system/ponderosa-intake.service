@@ -11,7 +11,7 @@ ExecStart=/opt/ponderosa/intake/run.sh
 Restart=on-failure
 RestartSec=5
 
-Environment=SURVEYS_DIR=/var/ponderosa/surveys
+Environment=SURVEYS_DIR=/var/ponderosa/surveys/pending
 Environment=RECOMMENDER_PIPE=/var/ponderosa/pipes/recommender
 
 StandardOutput=journal

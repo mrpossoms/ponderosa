@@ -1,0 +1,27 @@
+[Unit]
+Description=Ponderosa Presenter Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/ponderosa/presenter
+ExecStart=/opt/ponderosa/presenter/run.sh
+Restart=on-failure
+RestartSec=5
+
+Environment=PROCESSED_DIR=/var/ponderosa/surveys/processed
+Environment=SURVEYS_WEB=/var/www/ponderosafireprotection.com/surveys
+Environment=PRESENTER_PIPE=/var/ponderosa/pipes/presenter
+Environment=SURVEYS_URL=https://surveys.ponderosafireprotection.com
+Environment=SMTP_HOST=localhost
+Environment=SMTP_PORT=25
+Environment=EMAIL_FROM=reports@ponderosafireprotection.com
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ponderosa-presenter
+
+[Install]
+WantedBy=multi-user.target

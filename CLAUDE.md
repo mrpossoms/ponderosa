@@ -48,14 +48,24 @@ site/root/var/www/ponderosafireprotection.com/html/
 - `api.ponderosafireprotection.com` — intake service
 - `surveys.ponderosafireprotection.com/<id>` — generated survey report pages
 
+### Audit app wizard screens (`app.html`)
+
+1. **Intro** — splash with logo and "Get Started"
+2. **Email** (`#screen-email`) — collects user email before permissions; stored in `userEmail` var
+3. **Permissions** (`#screen-perms`) — requests camera, GPS, motion
+4. **Record** (`#screen-record`) — live viewfinder, HUD with frame count + GPS status, record/finish buttons
+5. **Upload** (`#screen-upload`) — indeterminate animated bar while frames are in-flight, switches to per-frame counter (`X / N`) as each settles, then "Finalizing…" for trajectory POST
+6. **Done** (`#screen-done`) — success confirmation
+
 ### Audit app pipeline
 
-1. Client (`app.html`) records video via `getUserMedia`, captures GPS + DeviceMotion data
-2. Client scores frames client-side (variance of Laplacian on downsampled grayscale copy) and POSTs only sharp frames as JPEG to intake
-3. Intake stores frames and trajectory, writes survey ID to a named pipe to trigger recommender
-4. Recommender reads named pipe, passes each image + pose pair sequentially to Claude with a system prompt enumerating possible actions, generates a Markdown report
-5. Recommender signals presenter via named pipe; presenter renders the MD into a static HTML page at `surveys/…/<id>`
-6. User receives email with link to their survey page
+1. Client (`app.html`) collects email, records video via `getUserMedia`, captures GPS + DeviceMotion data
+2. Client scores frames client-side (variance of Laplacian on downsampled grayscale copy) and POSTs only sharp frames as JPEG to intake during recording (best-effort, tracked as promises)
+3. On finish: waits for all in-flight frame POSTs, then POSTs trajectory + email as JSON
+4. Intake stores frames, `trajectory.json` (includes email), and `email.txt` separately; signals recommender via named pipe
+5. Recommender reads named pipe, passes each image + pose pair sequentially to Claude with a system prompt enumerating possible actions, generates a Markdown report
+6. Recommender signals presenter via named pipe; presenter renders the MD into a static HTML page at `surveys/…/<id>`
+7. User receives email with link to their survey page
 
 ### Inter-service communication
 
@@ -96,20 +106,29 @@ Layout breakpoints are all inline via `@media(max-width:…)` adjacent to the co
 
 ## UI automation (Playwright MCP)
 
-A Playwright MCP server is configured in `.claude/settings.json` so Claude can drive the app directly — navigate, click, screenshot, read the DOM — without a separate test harness.
+A Playwright MCP server is configured in `.mcp.json` so Claude can drive the app directly — navigate, click, screenshot, read the DOM — without a separate test harness.
 
 **Setup:**
-- MCP server: `npx @playwright/mcp` (no install needed)
-- Browser: Chrome with `--device "iPhone 15"` emulation and `--ignore-https-errors`
+- MCP server: `npx @playwright/mcp` (config in `.mcp.json`)
+- Browser: **WebKit** (Safari engine) with `--device "iPhone 15"` emulation
 - Init script: `.claude/mock-camera.js` — injected into every page, mocks:
   - `getUserMedia` → canvas-based fake video stream (draws animated frames so the sharpness scorer works)
   - `DeviceMotionEvent.requestPermission` → auto-grants
   - `navigator.geolocation` → fixed Denver, CO coordinates
 
-**To use:** start the dev server (`make serve` in `site/`), then ask Claude to interact with `https://localhost:8000/app.html`. The Playwright tools will be available in the session after restarting Claude Code with the project open.
+**To use:** start a plain HTTP dev server (`cd site/root/var/www/ponderosafireprotection.com/html && python3 -m http.server 8080`), then navigate Playwright to `http://localhost:8080/app.html`. WebKit rejects the self-signed dev cert so use HTTP on 8080, not the HTTPS server on 8000.
 
-The intake API calls (`/survey/*/image/*` and `/survey/*/trajectory`) hit `http://localhost:8001` in dev; if the intake service isn't running, frame POSTs fail silently (best-effort) and the trajectory POST will show an upload error on the done screen.
+**Important:** Frame uploads happen during recording and complete very quickly on localhost. To test the upload progress screen, inject a `window.fetch` mock with a delay of at least 30s before navigating — shorter delays resolve before Playwright can screenshot the intermediate state.
+
+The intake API calls (`/survey/*/image/*` and `/survey/*/trajectory`) hit `http://localhost:8001` in dev; run `cd services/intake && bash run.sh --dev` to start it locally.
 
 ## Deployment notes
 
-The nginx vhost (`sites-available/ponderosafireprotection.com`) listens on port 80 only. TLS/HTTPS is not configured in this repo. Access and error logs go to `/var/log/nginx/ponderosafireprotection-{access,error}.log`.
+Production server: **root@protean.io** — the repo lives at `/root/` (or the root home dir). Run `make install` from `site/` to deploy everything (site files + nginx + intake service + systemd unit).
+
+**HTTPS:** All three nginx vhosts use Let's Encrypt certs:
+- `ponderosafireprotection.com` + `www` → `/etc/letsencrypt/live/ponderosafireprotection.com/`
+- `app.ponderosafireprotection.com` → `/etc/letsencrypt/live/ponderosafireprotection.com/` (same cert, SAN)
+- `api.ponderosafireprotection.com` → `/etc/letsencrypt/live/ponderosafireprotection.com/` (same cert, SAN)
+
+**Intake service:** installed to `/opt/ponderosa/intake/` with a venv at `.venv/` built using `/usr/bin/python3` (not pyenv — pyenv python lives under `/root/` which `www-data` can't access). Survey data lands in `/var/ponderosa/surveys/` owned by `www-data`.

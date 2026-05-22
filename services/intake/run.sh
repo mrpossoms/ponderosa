@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Usage: ./run.sh [--dev]
-#   SURVEYS_DIR      — where survey subdirs are written (default /var/ponderosa/surveys)
+#   SURVEYS_DIR      — where survey subdirs are written (default /var/ponderosa/surveys/pending)
 #   RECOMMENDER_PIPE — path to the named pipe (default /var/ponderosa/pipes/recommender)
 
 set -e
@@ -8,12 +8,12 @@ set -e
 cd "$(dirname "$0")"
 
 if [[ "$1" == "--dev" ]]; then
-  SURVEYS_DIR="${SURVEYS_DIR:-/tmp/ponderosa/surveys}"
+  SURVEYS_DIR="${SURVEYS_DIR:-/tmp/ponderosa/surveys/pending}"
   RECOMMENDER_PIPE="${RECOMMENDER_PIPE:-/tmp/ponderosa/pipes/recommender}"
   DEV=1
   export DEV
 else
-  SURVEYS_DIR="${SURVEYS_DIR:-/var/ponderosa/surveys}"
+  SURVEYS_DIR="${SURVEYS_DIR:-/var/ponderosa/surveys/pending}"
   RECOMMENDER_PIPE="${RECOMMENDER_PIPE:-/var/ponderosa/pipes/recommender}"
 fi
 export SURVEYS_DIR RECOMMENDER_PIPE

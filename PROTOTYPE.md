@@ -83,7 +83,8 @@ The audit will work in the following way:
 
 * Python package
 * Listens to named pipe for messages from the recommender
-* Takes LLM recommendation MD file and processes it into a user readable UI
+* Takes LLM recommendation assesment .json file and processes it into a user readable UI
 * Generates HTML page from recommendation
 * Stores html page in directory isolated from the rest of the static site.
-* Surveys accessible at surveys.ponderosafireprotection.com/<id>
+* Survey results accessible at `surveys.ponderosafireprotection.com/<id>`
+* Emails user and provides a link to their generated report.

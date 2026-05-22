@@ -10,7 +10,7 @@ install:
 	rsync -a --delete . $(INTAKE_DIR)/
 	/usr/bin/python3 -m venv $(INTAKE_DIR)/.venv
 	$(INTAKE_DIR)/.venv/bin/pip install -q -e $(INTAKE_DIR)
-	mkdir -p /var/ponderosa/surveys /var/ponderosa/pipes
+	mkdir -p /var/ponderosa/surveys/pending /var/ponderosa/surveys/processed /var/ponderosa/pipes
 	chown -R www-data:www-data /var/ponderosa
 	cp root/etc/nginx/sites-available/api.ponderosafireprotection.com $(SITE_AVAILABLE)
 	ln -sf $(SITE_AVAILABLE) $(SITE_ENABLED)

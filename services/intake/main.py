@@ -16,7 +16,7 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
-SURVEYS_DIR  = Path(os.environ.get("SURVEYS_DIR", "/var/ponderosa/surveys"))
+SURVEYS_DIR  = Path(os.environ.get("SURVEYS_DIR", "/var/ponderosa/surveys/pending"))
 RECOMMENDER_PIPE = Path(os.environ.get("RECOMMENDER_PIPE", "/var/ponderosa/pipes/recommender"))
 
 SURVEYS_DIR.mkdir(parents=True, exist_ok=True)
