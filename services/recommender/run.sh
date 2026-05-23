@@ -9,6 +9,13 @@ set -e
 
 cd "$(dirname "$0")"
 
+# Load secrets from the nearest .secrets.env walking up from this file.
+# Production uses /etc/ponderosa/secrets.env via systemd EnvironmentFile.
+_secrets="$(dirname "$0")/.secrets.env"
+if [[ -f "$_secrets" ]]; then
+  set -a; source "$_secrets"; set +a
+fi
+
 if [[ "$1" == "--dev" ]]; then
   SURVEYS_DIR="${SURVEYS_DIR:-/tmp/ponderosa/surveys/pending}"
   PROCESSED_DIR="${PROCESSED_DIR:-/tmp/ponderosa/surveys/processed}"

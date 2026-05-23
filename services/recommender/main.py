@@ -23,7 +23,7 @@ _SYSTEM_PROMPT = (
     + (_CONTEXT_DIR / "ACTIONS.md").read_text()
 )
 
-_client = anthropic.Anthropic()
+_client = anthropic.Anthropic(timeout=120.0)
 
 
 def ensure_pipe(path: Path) -> None:
