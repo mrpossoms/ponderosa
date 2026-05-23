@@ -5,13 +5,12 @@ Daemon that reads survey IDs from a named pipe, calls the Claude API once per fr
 ## How it works
 
 1. Reads a survey ID from `RECOMMENDER_PIPE` (blocking FIFO)
-2. For each JPEG in `$SURVEYS_DIR/<id>/frames/`, sorted by frame number:
-   - Downsamples the image so its largest dimension is ≤ 1024 px
-   - Sends the image + pose data (lat, lon, heading, pitch, roll) to `claude-haiku-4-5-20251001`
-   - Parses the JSON response: `{ assessment: "…", actions: ["ACTION_CODE", …] }`
-3. Writes all per-frame results to `assessment.json`
-4. Moves the survey directory from `SURVEYS_DIR` to `PROCESSED_DIR`
-5. Writes the survey ID to `PRESENTER_PIPE`
+2. Loads all JPEGs from `$SURVEYS_DIR/<id>/frames/` and downsamples each so its largest dimension is ≤ 1024 px
+3. Sends **all frames in a single API call** to `claude-haiku-4-5-20251001` — frames are interleaved with their pose data (lat, lon, heading, pitch, roll) as a sequence of image + text content blocks. Seeing the full survey at once lets the model calibrate urgency across frames rather than scoring each in isolation.
+4. Parses the JSON array response: `[{ frame, urgency, assessment, actions[] }, …]`
+5. Merges pose data back in and writes `assessment.json`
+6. Moves the survey directory from `SURVEYS_DIR` to `PROCESSED_DIR`
+7. Writes the survey ID to `PRESENTER_PIPE`
 
 ## System prompt
 

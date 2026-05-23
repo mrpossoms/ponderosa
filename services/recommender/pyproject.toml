@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = []
+py-modules = ["main"]
+
+[project]
+name = "ponderosa-recommender"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.25.0",
+    "Pillow>=10.0.0",
+]

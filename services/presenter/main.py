@@ -33,21 +33,48 @@ def ensure_pipe(path: Path) -> None:
         raise RuntimeError(f"{path} exists but is not a FIFO")
 
 
-def render_html(survey_id: str, assessments: list[dict]) -> str:
+def filter_assessments(assessments: list[dict]) -> list[dict]:
+    urgencies = [a.get("urgency") or 0 for a in assessments]
+    if not urgencies:
+        return assessments
+    mean = sum(urgencies) / len(urgencies)
+
+    above = [a for a in assessments if (a.get("urgency") or 0) > mean]
+    covered_actions = {action for a in above for action in (a.get("actions") or [])}
+
+    novel = [
+        a for a in assessments
+        if (a.get("urgency") or 0) <= mean
+        and any(action not in covered_actions for action in (a.get("actions") or []))
+    ]
+
+    included_ids = {a.get("frameId") for a in above + novel}
+    return [a for a in assessments if a.get("frameId") in included_ids]
+
+
+def render_html(survey_id: str, rating, summary: str, assessments: list[dict]) -> str:
     return _jinja.get_template("report.html").render(
         survey_id=survey_id,
+        rating=rating,
+        summary=summary,
         assessments=assessments,
     )
 
 
 def present_survey(survey_id: str) -> str:
     """Render the HTML report and write it to the surveys web root. Returns the user's email."""
-    survey_dir  = PROCESSED_DIR / survey_id
-    assessments = json.loads((survey_dir / "assessment.json").read_text())
-    trajectory  = json.loads((survey_dir / "trajectory.json").read_text())
-    email       = trajectory.get("email", "")
+    survey_dir = PROCESSED_DIR / survey_id
+    assessment = json.loads((survey_dir / "assessment.json").read_text())
+    trajectory = json.loads((survey_dir / "trajectory.json").read_text())
+    email      = trajectory.get("email", "")
 
-    html = render_html(survey_id, assessments)
+    rating  = assessment.get("rating")
+    summary = assessment.get("summary", "")
+    frames  = assessment.get("frames", [])
+
+    filtered = filter_assessments(frames)
+    print(f"  {len(filtered)}/{len(frames)} frames included after urgency filter", flush=True)
+    html = render_html(survey_id, rating, summary, filtered)
 
     out_dir = SURVEYS_WEB / survey_id
     out_dir.mkdir(parents=True, exist_ok=True)

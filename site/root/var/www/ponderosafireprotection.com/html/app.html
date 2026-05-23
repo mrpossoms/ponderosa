@@ -181,8 +181,9 @@
     }
     #upload-label { font-size: .9rem; opacity: .7; min-height: 1.4em; }
 
-    /* ===== Email screen ===== */
-    #screen-email input[type="email"] {
+    /* ===== Email request / check-email screens ===== */
+    #screen-request input[type="email"],
+    #screen-check input[type="email"] {
       width: min(320px, 80vw);
       padding: .85rem 1rem;
       border-radius: 8px;
@@ -192,8 +193,8 @@
       font-family: 'Inter', sans-serif;
       font-size: 1rem;
     }
-    #screen-email input[type="email"]::placeholder { opacity: .45; }
-    #screen-email input[type="email"]:focus { outline: none; border-color: var(--orange); }
+    #screen-request input[type="email"]::placeholder { opacity: .45; }
+    #screen-request input[type="email"]:focus { outline: none; border-color: var(--orange); }
 
     /* ===== Done screen ===== */
     #screen-done .checkmark { font-size: 3.5rem; }
@@ -222,25 +223,24 @@
 <body>
 <div id="wizard">
 
-  <!-- 1. Intro -->
-  <div id="screen-intro" class="screen active">
+  <!-- 1. Email request (shown when no session in URL) -->
+  <div id="screen-request" class="screen active">
     <img class="logo" src="/imgs/logo-sm.svg" alt="Ponderosa">
     <h1 class="display">Property<br>Audit</h1>
-    <p>Walk the perimeter of your home and outbuildings. We'll analyze your footage and send you a personalized fire-risk report.</p>
-    <button class="btn-primary" onclick="showScreen('email')">Get Started</button>
-  </div>
-
-  <!-- 2. Email -->
-  <div id="screen-email" class="screen">
-    <div class="icon">✉️</div>
-    <h2 class="display" style="font-size:2.4rem">Your Report</h2>
-    <p style="opacity:.75;max-width:32ch">Enter your email and we'll send your personalized fire-risk report within 24 hours.</p>
+    <p style="opacity:.75;max-width:34ch">Enter your email and we'll send you a link to begin your walkthrough.</p>
     <input type="email" id="input-email" placeholder="you@example.com" autocomplete="email">
-    <button class="btn-primary" id="btn-email-next" onclick="submitEmail()">Next</button>
-    <p id="email-error" style="color:var(--ember);font-size:.85rem;display:none"></p>
+    <button class="btn-primary" id="btn-request" onclick="requestSession()">Send My Link</button>
+    <p id="request-error" style="color:var(--ember);font-size:.85rem;display:none"></p>
   </div>
 
-  <!-- 3. Permissions -->
+  <!-- 2. Check email confirmation -->
+  <div id="screen-check" class="screen">
+    <div style="font-size:3rem">✉️</div>
+    <h2 class="display" style="font-size:2.4rem">Check Your Email</h2>
+    <p style="opacity:.75;max-width:34ch">We sent a link to <strong id="check-email-address"></strong>. Tap it on your phone to begin your property walkthrough.</p>
+  </div>
+
+  <!-- 3. Permissions (shown when session present in URL) -->
   <div id="screen-perms" class="screen">
     <div class="icon">📷</div>
     <h2 class="display" style="font-size:2.4rem">Before we begin</h2>
@@ -298,8 +298,8 @@ const COOLDOWN_MS   = 2000;
 const SCORE_WIDTH   = 320;
 const SEND_QUALITY  = 0.85;
 
-let surveyId        = null;
-let userEmail       = null;
+// Session ID comes from ?session= query param; used as the survey ID for all uploads.
+const sessionId     = new URLSearchParams(window.location.search).get('session');
 let stream          = null;
 let recording       = false;
 let frameCount      = 0;
@@ -315,25 +315,46 @@ const scoreCanvas   = document.createElement('canvas');
 const scoreCtx      = scoreCanvas.getContext('2d');
 scoreCanvas.width   = SCORE_WIDTH;
 
+// ─── Init: route based on session param ───────────────────────────────────────
+if (sessionId) {
+  showScreen('perms');
+}
+
 // ─── Screen navigation ────────────────────────────────────────────────────────
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + name).classList.add('active');
 }
 
-// ─── Email ────────────────────────────────────────────────────────────────────
-function submitEmail() {
+// ─── Session request ──────────────────────────────────────────────────────────
+async function requestSession() {
   const input = document.getElementById('input-email');
-  const err   = document.getElementById('email-error');
+  const err   = document.getElementById('request-error');
+  const btn   = document.getElementById('btn-request');
   const email = input.value.trim();
+
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     err.textContent = 'Please enter a valid email address.';
     err.style.display = 'block';
     return;
   }
   err.style.display = 'none';
-  userEmail = email;
-  showScreen('perms');
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(`${INTAKE_BASE}/session`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    if (!res.ok) throw new Error(`Server error: ${res.status}`);
+    document.getElementById('check-email-address').textContent = email;
+    showScreen('check');
+  } catch (e) {
+    err.textContent = 'Something went wrong. Please try again.';
+    err.style.display = 'block';
+    btn.disabled = false;
+  }
 }
 
 // ─── Permissions ──────────────────────────────────────────────────────────────
@@ -375,21 +396,12 @@ async function requestPermissions() {
       currentPose.gamma = e.gamma;
     });
 
-    surveyId = generateSurveyId(currentPose.lat, currentPose.lon);
     showScreen('record');
   } catch (e) {
     err.textContent = 'Could not access camera or sensors: ' + e.message;
     err.style.display = 'block';
     btn.disabled = false;
   }
-}
-
-// ─── Survey ID ────────────────────────────────────────────────────────────────
-function generateSurveyId(lat, lon) {
-  // Simple base32 geohash-style ID using timestamp + coords
-  const ts  = Date.now().toString(36);
-  const loc = lat != null ? (lat.toFixed(4) + lon.toFixed(4)).replace(/[^0-9]/g, '') : '0000';
-  return ts + loc.slice(0, 8);
 }
 
 // ─── Recording toggle ─────────────────────────────────────────────────────────
@@ -493,7 +505,7 @@ function captureAndSend() {
 
   const upload = new Promise(resolve => {
     out.toBlob(blob => {
-      fetch(`${INTAKE_BASE}/survey/${surveyId}/image/${frameId}`, {
+      fetch(`${INTAKE_BASE}/survey/${sessionId}/image/${frameId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'image/jpeg' },
         body: blob,
@@ -524,10 +536,10 @@ async function uploadAll() {
   setProgress(Math.round(total / (total + 1) * 100), 'Finalizing…');
 
   try {
-    await fetch(`${INTAKE_BASE}/survey/${surveyId}/trajectory`, {
+    await fetch(`${INTAKE_BASE}/survey/${sessionId}/trajectory`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ surveyId, email: userEmail, trajectory }),
+      body: JSON.stringify({ surveyId: sessionId, trajectory }),
     });
     setProgress(100, 'Done!');
     setTimeout(() => showScreen('done'), 800);
