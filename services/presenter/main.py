@@ -6,6 +6,7 @@ from email.message import EmailMessage
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from PIL import Image
 
 PROCESSED_DIR  = Path(os.environ.get("PROCESSED_DIR", "/var/ponderosa/surveys/processed"))
 SURVEYS_WEB    = Path(os.environ.get("SURVEYS_WEB", "/var/www/ponderosafireprotection.com/surveys"))
@@ -74,13 +75,22 @@ def present_survey(survey_id: str) -> str:
 
     filtered = filter_assessments(frames)
     print(f"  {len(filtered)}/{len(frames)} frames included after urgency filter", flush=True)
+
+    # Annotate each frame with its orientation for template layout selection
+    frames_src = survey_dir / "frames"
+    for entry in filtered:
+        frame_path = frames_src / f"{entry['frameId']}.jpg"
+        try:
+            w, h = Image.open(frame_path).size
+            entry["portrait"] = h > w
+        except Exception:
+            entry["portrait"] = False
+
     html = render_html(survey_id, rating, summary, filtered)
 
     out_dir = SURVEYS_WEB / survey_id
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Copy frames so the HTML can reference them relatively
-    frames_src = survey_dir / "frames"
     frames_dst = out_dir / "frames"
     frames_dst.mkdir(exist_ok=True)
     for jpg in frames_src.glob("*.jpg"):
