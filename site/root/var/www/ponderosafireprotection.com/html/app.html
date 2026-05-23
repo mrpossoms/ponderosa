@@ -259,7 +259,7 @@
     <video id="viewfinder" autoplay playsinline muted></video>
     <div id="hud">
       <div id="hud-top">
-        <div id="instruction-box">Walk slowly around your buildings, keeping them in frame.</div>
+        <div id="instruction-box">Walk slowly around your buildings, keeping them in frame. Maintain a distance of about 30ft.</div>
         <div id="status-box">
           <div>Frames <span id="stat-sent">0</span></div>
           <div>GPS <span id="stat-gps">—</span></div>
@@ -308,7 +308,7 @@ let recentScores    = [];
 let trajectory      = [];   // {lat, lon, alpha, beta, gamma, t, frameId}
 let currentPose     = {lat: null, lon: null, alpha: 0, beta: 0, gamma: 0};
 let rafHandle       = null;
-let frameUploads    = [];   // promises for each frame POST
+let pendingFrames   = [];   // { frameId, blob } captured during recording
 
 const video         = document.getElementById('viewfinder');
 const scoreCanvas   = document.createElement('canvas');
@@ -503,35 +503,37 @@ function captureAndSend() {
     gamma: currentPose.gamma,
   });
 
-  const upload = new Promise(resolve => {
-    out.toBlob(blob => {
-      fetch(`${INTAKE_BASE}/survey/${sessionId}/image/${frameId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'image/jpeg' },
-        body: blob,
-      }).then(resolve, resolve);  // resolve on success or failure — best-effort
-    }, 'image/jpeg', SEND_QUALITY);
-  });
-  frameUploads.push(upload);
+  out.toBlob(blob => pendingFrames.push({ frameId, blob }), 'image/jpeg', SEND_QUALITY);
 }
 
 // ─── Upload trajectory then signal done ───────────────────────────────────────
 async function uploadAll() {
   showScreen('upload');
 
-  const total = frameUploads.length;
-  let done = 0;
+  const frames = pendingFrames.slice();
+  const total  = frames.length;
+  let done     = 0;
 
   setProgress(0, `Uploading images… 0 / ${total}`);
-  document.getElementById('progress-bar').classList.add('indeterminate');
 
-  // Wait for all frame uploads, updating progress as each settles
-  await Promise.all(frameUploads.map(p => p.then(() => {
+  // Upload up to 3 frames concurrently
+  async function uploadFrame({ frameId, blob }) {
+    await fetch(`${INTAKE_BASE}/survey/${sessionId}/image/${frameId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'image/jpeg' },
+      body: blob,
+    }).catch(() => {});  // best-effort
     done++;
-    document.getElementById('progress-bar').classList.remove('indeterminate');
     const pct = Math.round((done / (total + 1)) * 100);  // +1 reserves room for trajectory
     setProgress(pct, `Uploading images… ${done} / ${total}`);
-  })));
+  }
+
+  // Run with concurrency limit of 3
+  const queue = frames.slice();
+  async function worker() {
+    while (queue.length) await uploadFrame(queue.shift());
+  }
+  await Promise.all([worker(), worker(), worker()]);
 
   setProgress(Math.round(total / (total + 1) * 100), 'Finalizing…');
 
