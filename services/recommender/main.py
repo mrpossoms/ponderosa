@@ -136,18 +136,19 @@ def run() -> None:
 
     print(f"Recommender listening on {RECOMMENDER_PIPE}", flush=True)
 
-    with open(RECOMMENDER_PIPE, "r") as pipe:
-        for line in pipe:
-            survey_id = line.strip()
-            if not survey_id:
-                continue
-            print(f"Processing survey {survey_id}", flush=True)
-            try:
-                process_survey(SURVEYS_DIR / survey_id)
-                move_to_processed(survey_id)
-                signal_presenter(survey_id)
-            except Exception as exc:
-                print(f"ERROR processing {survey_id}: {exc}", flush=True)
+    while True:
+        with open(RECOMMENDER_PIPE, "r") as pipe:
+            for line in pipe:
+                survey_id = line.strip()
+                if not survey_id:
+                    continue
+                print(f"Processing survey {survey_id}", flush=True)
+                try:
+                    process_survey(SURVEYS_DIR / survey_id)
+                    move_to_processed(survey_id)
+                    signal_presenter(survey_id)
+                except Exception as exc:
+                    print(f"ERROR processing {survey_id}: {exc}", flush=True)
 
 
 if __name__ == "__main__":

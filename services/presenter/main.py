@@ -133,15 +133,16 @@ def run() -> None:
 
     print(f"Presenter listening on {PRESENTER_PIPE}", flush=True)
 
-    with open(PRESENTER_PIPE, "r") as pipe:
-        for line in pipe:
-            survey_id = line.strip()
-            if not survey_id:
-                continue
-            try:
-                process(survey_id)
-            except Exception as exc:
-                print(f"ERROR presenting {survey_id}: {exc}", flush=True)
+    while True:
+        with open(PRESENTER_PIPE, "r") as pipe:
+            for line in pipe:
+                survey_id = line.strip()
+                if not survey_id:
+                    continue
+                try:
+                    process(survey_id)
+                except Exception as exc:
+                    print(f"ERROR presenting {survey_id}: {exc}", flush=True)
 
 
 if __name__ == "__main__":
