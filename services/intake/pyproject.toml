@@ -2,6 +2,10 @@
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+packages = []
+py-modules = ["main"]
+
 [project]
 name = "ponderosa-intake"
 version = "0.1.0"
@@ -13,6 +17,3 @@ dependencies = [
     "jinja2>=3.1.0",
     "pydantic[email]>=2.0.0",
 ]
-
-[project.scripts]
-intake = "intake.main:app"
