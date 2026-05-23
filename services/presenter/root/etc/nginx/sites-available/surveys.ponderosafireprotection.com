@@ -18,7 +18,11 @@ server {
     root /var/www/ponderosafireprotection.com/surveys;
 
     location / {
-        try_files $uri $uri/index.html =404;
+        try_files $uri $uri/ =404;
+    }
+
+    location ~* ^/[^/]+$ {
+        return 301 $uri/;
     }
 
     access_log /var/log/nginx/ponderosa-surveys-access.log;

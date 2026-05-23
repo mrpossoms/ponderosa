@@ -94,7 +94,7 @@ def send_email(to: str, survey_id: str) -> None:
     if not to:
         return
 
-    url = f"{SURVEYS_URL}/{survey_id}"
+    url = f"{SURVEYS_URL}/{survey_id}/"
     html_body = _jinja.get_template("email.html").render(url=url)
     text_body = (
         f"Your property fire-risk report is ready.\n\n"
