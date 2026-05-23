@@ -1,14 +1,14 @@
 # ponderosa-recommender
 
-Daemon that reads survey IDs from a named pipe, calls the Claude API once per frame to assess wildfire risk, writes `assessment.json`, then signals the presenter.
+Daemon that reads survey IDs from a named pipe, calls the Claude API once per survey to assess wildfire risk across all frames, writes `assessment.json`, then signals the presenter.
 
 ## How it works
 
 1. Reads a survey ID from `RECOMMENDER_PIPE` (blocking FIFO)
 2. Loads all JPEGs from `$SURVEYS_DIR/<id>/frames/` and downsamples each so its largest dimension is ≤ 1024 px
 3. Sends **all frames in a single API call** to `claude-haiku-4-5-20251001` — frames are interleaved with their pose data (lat, lon, heading, pitch, roll) as a sequence of image + text content blocks. Seeing the full survey at once lets the model calibrate urgency across frames rather than scoring each in isolation.
-4. Parses the JSON array response: `[{ frame, urgency, assessment, actions[] }, …]`
-5. Merges pose data back in and writes `assessment.json`
+4. Parses the JSON response: `{ rating, summary, frames: [{ frame, urgency, assessment, actions[] }, …] }`
+5. Merges pose data back in and writes `assessment.json` (includes top-level `rating` and `summary`)
 6. Moves the survey directory from `SURVEYS_DIR` to `PROCESSED_DIR`
 7. Writes the survey ID to `PRESENTER_PIPE`
 
@@ -31,6 +31,13 @@ ANTHROPIC_API_KEY=sk-ant-… python main.py /path/to/survey_dir
 ```
 
 Daemon mode in `--dev` uses `/tmp` paths instead of `/var/ponderosa`.
+
+For repeated dev runs, put the key in `.secrets.env` in this directory (gitignored) — `run.sh` sources it automatically:
+
+```sh
+echo 'ANTHROPIC_API_KEY=sk-ant-…' > .secrets.env
+./run.sh --dev
+```
 
 ## Environment variables
 

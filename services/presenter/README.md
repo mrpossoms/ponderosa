@@ -6,15 +6,21 @@ Daemon that reads survey IDs from a named pipe, renders a branded HTML report fr
 
 1. Reads a survey ID from `PRESENTER_PIPE` (blocking FIFO)
 2. Loads `assessment.json` and `trajectory.json` from `$PROCESSED_DIR/<id>/`
-3. Renders `templates/report.html` via Jinja2 — one card per frame with the image, GPS metadata, Claude's assessment text, and action tag pills
-4. Copies frame JPEGs to `$SURVEYS_WEB/<id>/frames/` and writes `index.html`
-5. If `trajectory.json` contains an email address, sends a notification via SMTP using `templates/email.html`
+3. Filters frames: keeps those with urgency above the mean, plus any below-mean frames whose actions aren't already covered by the above-mean set (novel-action rule)
+4. Detects each frame's orientation (portrait vs landscape) using Pillow — selects the appropriate card layout
+5. Renders `templates/report.html` via Jinja2 — overall rating pip display and summary at top, then one card per filtered frame with image, GPS metadata, Claude's assessment, and action tag pills
+6. Copies frame JPEGs to `$SURVEYS_WEB/<id>/frames/` and writes `index.html`
+7. If `trajectory.json` contains an email address, sends a notification via SMTP using `templates/email.html`
+
+The notification email links to `$SURVEYS_URL/<id>/` — note the trailing slash, required for relative `frames/*.jpg` image paths in the report to resolve correctly.
 
 ## Templates
 
 Both templates use Jinja2 with autoescaping and match the site's dark brand theme (charcoal backgrounds, orange `#e8611a` accents, Bebas Neue / Oswald / Inter type stack).
 
-- `report.html` — full static report page served at `surveys.ponderosafireprotection.com/<id>/`
+- `report.html` — full static report page served at `surveys.ponderosafireprotection.com/<id>/`. Cards use two layouts:
+  - **Landscape** (default): image full-width on top, text below
+  - **Portrait**: CSS grid `240px 1fr` with image on the left and text on the right; collapses to stacked on narrow screens
 - `email.html` — table-based inline-style HTML email with a "VIEW YOUR REPORT" CTA button
 
 ## Running

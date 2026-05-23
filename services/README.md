@@ -6,8 +6,9 @@ Backend pipeline for the Ponderosa Fire Protection property audit app. Three coo
 
 ```
 app.html (client)
-    │  POST /survey/{id}/image/{n}   (JPEG frames, fire-and-forget during recording)
-    │  POST /survey/{id}/trajectory  (pose data + email, on finish)
+    │  POST /session                 (email → magic link sent; returns session token)
+    │  POST /survey/{sid}/image/{n}  (JPEG frames, fire-and-forget during recording)
+    │  POST /survey/{sid}/trajectory (pose data, on finish; triggers recommender)
     ▼
 ┌─────────┐   FIFO: /var/ponderosa/pipes/recommender
 │  intake │ ─────────────────────────────────────────►
@@ -29,9 +30,9 @@ app.html (client)
 
 | Service | Description |
 |---------|-------------|
-| [intake](intake/) | FastAPI HTTP API — receives frames and trajectory from the client app |
-| [recommender](recommender/) | Claude API daemon — assesses each frame for wildfire risk |
-| [presenter](presenter/) | Jinja2 renderer — produces the HTML report page and sends the email |
+| [intake](intake/) | FastAPI HTTP API — issues sessions, receives frames and trajectory from the client app |
+| [recommender](recommender/) | Claude API daemon — assesses all frames in a single call, writes rating + per-frame analysis |
+| [presenter](presenter/) | Jinja2 renderer — filters frames, detects orientation, produces the HTML report and sends the email |
 
 ## Filesystem layout (production)
 
