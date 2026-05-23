@@ -15,6 +15,7 @@ Environment=SURVEYS_DIR=/var/ponderosa/surveys/pending
 Environment=PROCESSED_DIR=/var/ponderosa/surveys/processed
 Environment=RECOMMENDER_PIPE=/var/ponderosa/pipes/recommender
 Environment=PRESENTER_PIPE=/var/ponderosa/pipes/presenter
+EnvironmentFile=/etc/ponderosa/secrets.env
 
 StandardOutput=journal
 StandardError=journal

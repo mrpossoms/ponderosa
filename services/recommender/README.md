@@ -45,7 +45,16 @@ Daemon mode in `--dev` uses `/tmp` paths instead of `/var/ponderosa`.
 ## Installation (production)
 
 ```sh
-sudo make install
+sudo make install   # run from site/
 ```
 
-Installs to `/opt/ponderosa/recommender/`, registers `ponderosa-recommender.service` with systemd. The `ANTHROPIC_API_KEY` must be set in the service's environment before starting — edit the unit file or add a drop-in under `/etc/systemd/system/ponderosa-recommender.service.d/`.
+Installs to `/opt/ponderosa/recommender/` and registers `ponderosa-recommender.service` with systemd.
+
+`ANTHROPIC_API_KEY` is loaded at runtime from `/etc/ponderosa/secrets.env`, which lives only on the server and is never committed to the repo. The top-level `make install` will prompt for the key and write it to that file if it isn't already present.
+
+To rotate the key manually:
+
+```sh
+sed -i 's/^ANTHROPIC_API_KEY=.*/ANTHROPIC_API_KEY=sk-ant-.../' /etc/ponderosa/secrets.env
+systemctl restart ponderosa-recommender
+```
