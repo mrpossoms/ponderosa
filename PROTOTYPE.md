@@ -88,3 +88,25 @@ The audit will work in the following way:
 * Stores html page in directory isolated from the rest of the static site.
 * Survey results accessible at `surveys.ponderosafireprotection.com/<id>`
 * Emails user and provides a link to their generated report.
+* Chooses from list of affiliates who offer services which could address the actions recommender suggested.
+  * List of affiliates is stored at /var/ponderosa/affiliates.json
+  * This directory structure is stored in the presenter service component using the same root/ pattern used elsewhere.
+  * The structure of affiliates.json is given below
+```
+{
+  "affiliates": [
+    {
+      "id": "{unique_id}",
+      "name": "{company_name}",
+      "phone": "{phone}",
+      "website": "{url}",
+      "address": "{company_address}",
+      "description": "{company_description}",
+      "rating": "{company_rating}",
+      "services": [{list_of_services}]
+    }
+  ]
+}
+```
+* For each frame that is of sufficient urgency, select a list of affiliates to choose from
+* A scrollable list view below the description of the frame's assessment should contain relevant affiliate information

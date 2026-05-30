@@ -12,6 +12,7 @@ PROCESSED_DIR  = Path(os.environ.get("PROCESSED_DIR", "/var/ponderosa/surveys/pr
 SURVEYS_WEB    = Path(os.environ.get("SURVEYS_WEB", "/var/www/ponderosafireprotection.com/surveys"))
 PRESENTER_PIPE = Path(os.environ.get("PRESENTER_PIPE", "/var/ponderosa/pipes/presenter"))
 SURVEYS_URL    = os.environ.get("SURVEYS_URL", "https://surveys.ponderosafireprotection.com")
+AFFILIATES_FILE = Path(os.environ.get("AFFILIATES_FILE", "/var/ponderosa/affiliates.json"))
 
 SMTP_HOST      = os.environ.get("SMTP_HOST", "localhost")
 SMTP_PORT      = int(os.environ.get("SMTP_PORT", "25"))
@@ -32,6 +33,17 @@ def ensure_pipe(path: Path) -> None:
         os.mkfifo(path)
     elif not stat.S_ISFIFO(path.stat().st_mode):
         raise RuntimeError(f"{path} exists but is not a FIFO")
+
+
+def load_affiliates() -> list[dict]:
+    if not AFFILIATES_FILE.exists():
+        return []
+    return json.loads(AFFILIATES_FILE.read_text()).get("affiliates", [])
+
+
+def match_affiliates(actions: list[str], affiliates: list[dict]) -> list[dict]:
+    action_set = set(actions or [])
+    return [a for a in affiliates if action_set & set(a.get("services", []))]
 
 
 def filter_assessments(assessments: list[dict]) -> list[dict]:
@@ -76,6 +88,8 @@ def present_survey(survey_id: str) -> str:
     filtered = filter_assessments(frames)
     print(f"  {len(filtered)}/{len(frames)} frames included after urgency filter", flush=True)
 
+    affiliates = load_affiliates()
+
     # Annotate each frame with its orientation for template layout selection
     frames_src = survey_dir / "frames"
     for entry in filtered:
@@ -85,6 +99,7 @@ def present_survey(survey_id: str) -> str:
             entry["portrait"] = h > w
         except Exception:
             entry["portrait"] = False
+        entry["affiliates"] = match_affiliates(entry.get("actions", []), affiliates)
 
     html = render_html(survey_id, rating, summary, filtered)
 

@@ -109,6 +109,71 @@
       border-radius: 4px;
     }
 
+    .affiliates-section {
+      border-top: 1px solid var(--line-strong);
+      padding-top: .85rem;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .affiliates-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      opacity: .45;
+    }
+    .affiliates-scroll {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      max-height: 280px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--line-strong) transparent;
+    }
+    .affiliates-scroll::-webkit-scrollbar { width: 4px; }
+    .affiliates-scroll::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 2px; }
+    .affiliate-card {
+      background: var(--char-2);
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: .85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+    .affiliate-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+      line-height: 1.25;
+    }
+    .affiliate-desc {
+      font-size: .78rem;
+      opacity: .7;
+      line-height: 1.5;
+      flex: 1;
+    }
+    .affiliate-contact {
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
+      font-size: .75rem;
+    }
+    .affiliate-contact a {
+      color: var(--orange);
+      text-decoration: none;
+    }
+    .affiliate-contact a:hover { text-decoration: underline; }
+    .affiliate-rating {
+      font-family: 'Oswald', sans-serif;
+      font-size: .7rem;
+      letter-spacing: .06em;
+      opacity: .5;
+    }
+
     footer {
       text-align: center;
       padding: 2.5rem 1rem;
@@ -212,6 +277,24 @@
           <li>{{ action }}</li>
           {% endfor %}
         </ul>
+        {% endif %}
+        {% if entry.get("affiliates") %}
+        <div class="affiliates-section">
+          <div class="affiliates-label">Recommended Service Providers</div>
+          <div class="affiliates-scroll">
+            {% for aff in entry.affiliates %}
+            <div class="affiliate-card">
+              <div class="affiliate-name">{{ aff.name }}</div>
+              <div class="affiliate-desc">{{ aff.description }}</div>
+              <div class="affiliate-contact">
+                <a href="tel:{{ aff.phone }}">{{ aff.phone }}</a>
+                <a href="{{ aff.website }}" target="_blank" rel="noopener">{{ aff.website | replace("https://", "") }}</a>
+              </div>
+              <div class="affiliate-rating">&#9733; {{ aff.rating }}</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
         {% endif %}
       </div>
     </div>
